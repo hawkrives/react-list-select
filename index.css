@@ -1,0 +1,9 @@
+.box-list-select {
+  display: inline-block;
+  outline: none;
+}
+
+.box-list-select-item {
+  position: relative;
+  cursor: pointer;
+}

@@ -1,0 +1,56 @@
+@import 'box-css/default.css';
+@import '../index.css';
+
+
+body {
+  padding: 3em;
+}
+
+.demo > div {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 1.5em;
+}
+
+
+/* Add some style to the list */
+
+.box-list-select {
+  background: #fafafa;
+  border: 1px solid #cacaca;
+  margin-right: .5em;
+}
+.box-list-select-item {
+  padding: .2em .5em;
+}
+.box-list-select-item.is-selected {
+  background: #D7E7FF;
+}
+.box-list-select-item.is-focused::before,
+.box-list-select-item.is-focused::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #79B9FF;
+}
+.box-list-select-item.is-focused::after {
+  left: auto;
+  right: 0;
+}
+.box-list-select-item.is-disabled {
+  color: #afafaf;
+}
+
+
+/* Component in list - last example */
+
+.contact {
+  padding: .5em;
+}
+.contact .email {
+  font-size: .675em;
+  color: #999;
+}

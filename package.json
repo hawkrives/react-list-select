@@ -1,0 +1,30 @@
+{
+  "name": "react-list-select",
+  "version": "0.0.0-alpha",
+  "description": "List with selectable and navigable items - React.js",
+  "main": "index.js",
+  "style": "index.css",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:navaru/react-list-select.git"
+  },
+  "author": "Navaru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/navaru/react-list-select/issues"
+  },
+  "homepage": "https://github.com/navaru/react-list-select",
+  "devDependencies": {
+    "browserify": "^3.33.0",
+    "gulp": "^3.5.6",
+    "send": "^0.2.0",
+    "gulp-livereload": "^1.2.0",
+    "box-css": "git://github.com/navaru/box-css",
+    "rework-npm": "^0.6.1",
+    "rework": "^0.20.2"
+  },
+  "dependencies": {
+    "react-mixin-classlist": "git://github.com/navaru/react-mixin-classlist",
+    "is-type": "git://github.com/navaru/is-type"
+  }
+}
