@@ -3,7 +3,7 @@ var is = require('is-type')
 
 
 var defaults = {
-  className: 'box-list-select'
+  className: 'react-list-select'
 , focusOn: []
 , focusItemOn: ['click']
 , selectItemOn: ['click', 'space', 'enter']
@@ -47,7 +47,7 @@ module.exports = React.createClass({
       })
 
       var settings = {
-        className: 'box-list-select-item ' + classes
+        className: 'react-list-select-item ' + classes
       , key: index
       , onClick: this.onClickItem.bind(this, item)
       , onDoubleClick: this.onClickItem.bind(this, item)

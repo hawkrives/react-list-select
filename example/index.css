@@ -15,19 +15,19 @@ body {
 
 /* Add some style to the list */
 
-.box-list-select {
+.react-list-select {
   background: #fafafa;
   border: 1px solid #cacaca;
   margin-right: .5em;
 }
-.box-list-select-item {
+.react-list-select-item {
   padding: .2em .5em;
 }
-.box-list-select-item.is-selected {
+.react-list-select-item.is-selected {
   background: #D7E7FF;
 }
-.box-list-select-item.is-focused::before,
-.box-list-select-item.is-focused::after {
+.react-list-select-item.is-focused::before,
+.react-list-select-item.is-focused::after {
   content: '';
   position: absolute;
   left: 0;
@@ -36,11 +36,11 @@ body {
   width: 2px;
   background: #79B9FF;
 }
-.box-list-select-item.is-focused::after {
+.react-list-select-item.is-focused::after {
   left: auto;
   right: 0;
 }
-.box-list-select-item.is-disabled {
+.react-list-select-item.is-disabled {
   color: #afafaf;
 }
 
