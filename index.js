@@ -110,6 +110,8 @@ module.exports = React.createClass({
 
     if (~this.props.selectItemOn.indexOf(key))
       this.selectItem(this.state.focusedItem)
+
+    event.preventDefault()
   }
 
 , onBlur: function (event) {
