@@ -32,7 +32,7 @@ module.exports = React.createClass({
   }
 
 , componentWillReceiveProps: function (props) {
-    setState({
+    this.setState({
       items: props.items
     , previous: props.multiple ? null : getSelected(props.items)
     })
