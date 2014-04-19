@@ -449,10 +449,11 @@ i {
 
 .react-list-select {
   display: inline-block;
+  position: relative;
   outline: none;
 }
 
-.react-list-select-item {
+.react-list-select--item {
   position: relative;
   cursor: pointer;
 }
@@ -475,16 +476,16 @@ body {
   margin-right: .5em;
 }
 
-.react-list-select-item {
+.react-list-select--item {
   padding: .2em .5em;
 }
 
-.react-list-select-item.is-selected {
+.react-list-select--item.is-selected {
   background: #D7E7FF;
 }
 
-.react-list-select-item.is-focused::before,
-.react-list-select-item.is-focused::after {
+.react-list-select--item.is-focused::before,
+.react-list-select--item.is-focused::after {
   content: '';
   position: absolute;
   left: 0;
@@ -494,12 +495,12 @@ body {
   background: #79B9FF;
 }
 
-.react-list-select-item.is-focused::after {
+.react-list-select--item.is-focused::after {
   left: auto;
   right: 0;
 }
 
-.react-list-select-item.is-disabled {
+.react-list-select--item.is-disabled {
   color: #afafaf;
 }
 

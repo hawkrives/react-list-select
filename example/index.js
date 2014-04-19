@@ -3,28 +3,13 @@ var List = require('../index.js')
 var DIV = React.DOM.div
 
 
-
 /*
     EXAMPLE 1
 */
 
-function parseHash (hash, selected) {
-  return Object.keys(hash).map(function (key) {
-    return {
-      key: key
-    , content: hash[key]
-    , selected: Array.isArray(selected) ? ~selected.indexOf(key) : selected == key
-    }
-  })
-}
-
-function onSelectHash (items) {
-  items = items.map(function (item) { return item.key })
-  console.log(items.length > 1 ? items : items[0])
-}
 
 
-var items = {
+var hashmap = {
   'NY': 'New York'
 , 'MN': 'Minnesota'
 , 'SC': 'South Carolina'
@@ -37,18 +22,27 @@ var items = {
 , 'MT': 'Montana '
 }
 
+var keys = Object.keys(hashmap)
+
+var items = keys.map(function (key) { return hashmap[key] })
+
 var example1 = List({
-  items: parseHash(items, 'SD')
-, onSelect: onSelectHash
+  items: items
+, selected: [3]
+, disabled: [0,4,6,7,9]
+, onMouseEnter: function (event) {
+    this.refs.list.getDOMNode().focus()
+  }
 })
 
 var example1multi = List({
-  items: parseHash(items, ['SD', 'DE', 'TN'])
-, onSelect: onSelectHash
+  items: items
+, selected: [2,4,6]
 , multiple: true
+, onMouseEnter: function (event) {
+    this.refs.list.getDOMNode().focus()
+  }
 })
-
-
 
 
 
@@ -58,20 +52,25 @@ var example1multi = List({
 */
 
 var items = [
-  { content: 'New file', disabled: true }
-, { content: 'New folder' }
-, { content: 'Copy', selected: true }
-, { content: 'Cut', disabled: true }
-, { content: 'Paste', disabled: true }
-, { content: 'Refresh', }
-, { content: 'Open', }
-, { content: 'Delete', disabled: true }
+  'New file'
+, 'New folder'
+, 'Copy'
+, 'Cut'
+, 'Paste'
+, 'Refresh'
+, 'Open'
+, 'Delete'
 ]
 
 var example3 = List({
   items: items
-, focusItemOn: ['mouseenter']
-, onSelect: function (item) { alert('Some action') }
+, disabled: [3, 7]
+, onMouseEnter: function (event) {
+    this.refs.list.getDOMNode().focus()
+  }
+, onChange: function (selected) {
+
+  }
 })
 
 
@@ -90,17 +89,19 @@ function comp (name, email) {
 }
 
 var comps = [
-  { content: comp('Mike', 'mike@server.com') }
-, { content: comp('John', 'john@server.com'), selected: true }
-, { content: comp('Bob', 'bob@server.com'), disabled: true }
-, { content: comp('Max', 'max@server.com') }
+  comp('Mike', 'mike@server.com')
+, comp('John', 'john@server.com')
+, comp('Bob', 'bob@server.com')
+, comp('Max', 'max@server.com')
 ]
 
 var example4 = List({
   items: comps
-, onSelect: function (items) { console.log(items) }
-, focusItemOn: ['mouseenter']
-, focusOn: ['mouseenter']
+, disabled: [2]
+, selected: [0]
+, onChange: function (selected) {
+    console.log(selected)
+  }
 })
 
 
