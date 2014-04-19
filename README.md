@@ -41,35 +41,35 @@ React.renderComponent(List(options), document.body)
 #### .select(index)
 
 Select an item from the list
- - index - `4` array index
+ - `[number]` `index` - items array index
 
 
 #### .deselect(index)
 
 Deselect an item from the list
- - index - `4` array index
+ - `[number]` `index` - items array index
 
 
 #### .disable(index)
 
 Disable an item from the list to be selected or focused
- - index - `4` array index
+ - `[number]` `index` - items array index
 
 
 #### .enable(index)
 
 Re-enable a disabled item to be focused or selected
- - index - `4` array index
+ - `[number]` `index` - items array index
 
 
 #### .focusItem(value)
 
 Focus an item from the list
 
-  - value
-    + `3` - array index
-    + `next` - focus next item from the list
-    + `previous` - focus previous item from the list
+  - `[mixed]` `value`
+    + `[number]` `3` - items array index
+    + `[string]` `next` - focus next item from the list
+    + `[string]` `previous` - focus previous item from the list
 
 
 #### .clear()
