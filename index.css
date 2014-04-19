@@ -1,9 +1,10 @@
 .react-list-select {
   display: inline-block;
+  position: relative;
   outline: none;
 }
 
-.react-list-select-item {
+.react-list-select--item {
   position: relative;
   cursor: pointer;
 }
