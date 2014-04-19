@@ -25,6 +25,5 @@
   },
   "dependencies": {
     "react-mixin-classlist": "git://github.com/navaru/react-mixin-classlist",
-    "is-type": "git://github.com/navaru/is-type"
   }
 }
