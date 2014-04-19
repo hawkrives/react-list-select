@@ -8,46 +8,73 @@ A list with selectable and keyboard navigable items. Useful as a dropdown (autoc
 ```
 var List = require('react-list-select')
 
-var options = {
-// Focus list or item on event - default: ['click']
-// ''
-  focusOn: ['click', 'mouseenter']
-, focusItemOn: ['click', 'mouseenter']
+var items = [
+  'Google'
+, 'TED'
+, 'GitHub'
+, 'Big Think'
+, 'Microsoft'
+]
 
-// Default: ['click', 'space', 'enter']
-, selectItemOn: ['click', 'space', 'enter', 'blur']
+var options = {
+  items: items
+
+// mark selected items
+, selected: [0]
+
+// mark disabled items
+, disabled: [4]
 
 // Enable multi-select
 , multiple: true
 
-// Triggered when an item is selected
-, onSelect: function (item) {}
-
-// To access methods on list:
-// this.refs.list.move('up') - focus items up/down
-// this.refs.list.position(top, left)
-// this.refs.list.clear() - clear selection
-, ref: 'list'
+// fired when items are selected or deselected
+, onChange: function (selected) { ... }
 }
 
 React.renderComponent(List(options), document.body)
 ```
 
 
+## API
 
-### Items
+#### .select(index)
 
-Items have the following format:
+Select an item from the list
+ - index - `4` array index
 
-```
-var items = [{
-// the things that will be displayed, could be a string or a React Component
-  content: ''
-, selected: true
-, disabled: false
-}]
 
-```
+#### .deselect(index)
+
+Deselect an item from the list
+ - index - `4` array index
+
+
+#### .disable(index)
+
+Disable an item from the list to be selected or focused
+ - index - `4` array index
+
+
+#### .enable(index)
+
+Re-enable a disabled item to be focused or selected
+ - index - `4` array index
+
+
+#### .focusItem(value)
+
+Focus an item from the list
+
+  - value
+    + `3` - array index
+    + `next` - focus next item from the list
+    + `previous` - focus previous item from the list
+
+
+#### .clear()
+
+Reset list state
 
 
 ## License - MIT
