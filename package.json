@@ -24,6 +24,6 @@
     "rework": "^0.20.2"
   },
   "dependencies": {
-    "react-mixin-classlist": "git://github.com/navaru/react-mixin-classlist",
+    "react-mixin-classlist": "git://github.com/navaru/react-mixin-classlist"
   }
 }
