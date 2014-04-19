@@ -21,7 +21,7 @@ body {
   margin-right: .5em;
 }
 .react-list-select--item {
-  padding: .2em .5em;
+  padding: .3em .6em;
 }
 .react-list-select--item.is-selected {
   background: #D7E7FF;
@@ -42,6 +42,14 @@ body {
 }
 .react-list-select--item.is-disabled {
   color: #afafaf;
+}
+
+
+.context-menu .react-list-select {
+  padding: .3em 0;
+}
+.context-menu .react-list-select--item {
+  font-size: .8125em;
 }
 
 

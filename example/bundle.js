@@ -112,7 +112,7 @@ var Demo = React.createClass({
   render: function () {
     return DIV({ className: 'demo' }, [
       DIV({}, [example1, example1multi])
-    , DIV({}, [example3])
+    , DIV({ className: 'context-menu' }, [example3])
     , DIV({}, [example4])
     ])
   }

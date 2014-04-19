@@ -477,7 +477,7 @@ body {
 }
 
 .react-list-select--item {
-  padding: .2em .5em;
+  padding: .3em .6em;
 }
 
 .react-list-select--item.is-selected {
@@ -502,6 +502,14 @@ body {
 
 .react-list-select--item.is-disabled {
   color: #afafaf;
+}
+
+.context-menu .react-list-select {
+  padding: .3em 0;
+}
+
+.context-menu .react-list-select--item {
+  font-size: .8125em;
 }
 
 /* Component in list - last example */
