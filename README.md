@@ -40,7 +40,7 @@ React.renderComponent(List(options), document.body)
 
 #### .select(index)
 
- - `[number]` `index` - items array index
+ - `number` __index__ - _items_ array index
 
 Select an item from the list
 
@@ -48,7 +48,7 @@ Select an item from the list
 
 #### .deselect(index)
 
- - `[number]` `index` - items array index
+ - `number` __index__ - _items_ array index
 
 Deselect an item from the list
 
@@ -56,7 +56,7 @@ Deselect an item from the list
 
 #### .disable(index)
 
- - `[number]` `index` - items array index
+ - `number` __index__ - _items_ array index
 
 Disable an item from the list to be selected or focused
 
@@ -64,18 +64,18 @@ Disable an item from the list to be selected or focused
 
 #### .enable(index)
 
- - `[number]` `index` - items array index
+ - `number` __index__ - _items_ array index
 
-Re-enable a disabled item to be focused or selected
+Enable a disabled item to be focused or selected
 
 
 
 #### .focusItem(value)
 
-  - `[mixed]` `value`
-    + `[number]` `3` - items array index
-    + `[string]` `next` - focus next item from the list
-    + `[string]` `previous` - focus previous item from the list
+  - __value__
+    + `number` __3__ - _items_ array index
+    + `string` __next__ - focus next item from the list
+    + `string` __previous__ - focus previous item from the list
 
 Focus an item from the list
 
