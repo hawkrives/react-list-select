@@ -150,7 +150,7 @@ module.exports = React.createClass({
     var settings = {
       tabIndex: 0
     , ref: 'list'
-    , className: this.classList('react-list-select ' + this.props.className || '')
+    , className: this.classList('react-list-select ' + (this.props.className || ''))
     , onKeyDown: this.onKeyDown
     }
 
