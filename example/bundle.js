@@ -263,10 +263,18 @@ module.exports = React.createClass({
     return defaults
   }
 , getInitialState: function () {
-    return this.props
+    return {
+      items: this.props.items
+    , selected: this.props.selected
+    , disabled: this.props.disabled
+  }
   }
 , componentWillReceiveProps: function (props) {
-    this.setState(props)
+    this.setState({
+      items: props.items
+    , selected: props.selected
+    , disabled: props.disabled
+    })
   }
 , render: function () {
     var items = this.state.items.map(renderItem, this)
@@ -274,7 +282,7 @@ module.exports = React.createClass({
     var settings = {
       tabIndex: 0
     , ref: 'list'
-    , className: this.classList('react-list-select ' + this.props.className || '')
+    , className: this.classList('react-list-select ' + (this.props.className || ''))
     , onKeyDown: this.onKeyDown
     }
 

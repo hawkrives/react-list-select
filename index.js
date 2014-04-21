@@ -139,10 +139,18 @@ module.exports = React.createClass({
     return defaults
   }
 , getInitialState: function () {
-    return this.props
+    return {
+      items: this.props.items
+    , selected: this.props.selected
+    , disabled: this.props.disabled
+  }
   }
 , componentWillReceiveProps: function (props) {
-    this.setState(props)
+    this.setState({
+      items: props.items
+    , selected: props.selected
+    , disabled: props.disabled
+    })
   }
 , render: function () {
     var items = this.state.items.map(renderItem, this)
