@@ -1,6 +1,6 @@
 {
   "name": "react-list-select",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "List with selectable and navigable items - React.js",
   "main": "index.js",
   "style": "index.css",

@@ -1,8 +1,5 @@
 var classList = require('react-mixin-classlist')
 
-var B = React.DOM.b
-var I = React.DOM.i
-
 var KEY = {
   UP: 38
 , DOWN: 40
@@ -169,42 +166,42 @@ module.exports = React.createClass({
     , 'onMouseLeave'
     ].forEach(function (method) {
       if (this.props[method]) {
-        settings[method] = this.props[method].bind(this)
+        settings[method] = this.props[method]
       }
     }, this)
 
-    return B(settings, items)
+    return React.DOM.b(settings, items)
   }
 })
 
 
 function renderItem (item, index) {
+  var $this = this
+
   var classes = this.setClassIf({
     'is-disabled': ~this.state.disabled.indexOf(index)
   , 'is-selected': ~this.state.selected.indexOf(index)
   , 'is-focused': this.state.focused == index
   })
 
-  return (
-    B({
-      key: index
-    , ref: '$' + index
-    , className: 'react-list-select--item ' + classes
+  var settings = {
+    key: index
+  , ref: '$' + index
+  , className: 'react-list-select--item ' + classes
+  , onMouseEnter: function () {
+      if (~$this.state.disabled.indexOf(index)) return
 
-    , onMouseEnter: function () {
-        if (~this.state.disabled.indexOf(index)) return
+      $this.setState({ focused: index })
+    }
+  , onClick: function (event) {
+      if (!~$this.state.selected.indexOf(index)) {
+        $this.select(index)
+      }
+      else if ($this.props.multiple) {
+        $this.deselect(index)
+      }
+    }
+  }
 
-        this.setState({ focused: index })
-      }.bind(this)
-
-    , onClick: function (event) {
-        if (~this.state.selected.indexOf(index)) {
-          this.deselect(index)
-        }
-        else {
-          this.select(index)
-        }
-      }.bind(this)
-    }, item)
-  )
+  return React.DOM.b(settings, item)
 }
