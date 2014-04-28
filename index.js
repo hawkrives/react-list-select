@@ -142,7 +142,7 @@ module.exports = React.createClass({
       items: this.props.items
     , selected: this.props.selected
     , disabled: this.props.disabled
-  }
+    }
   }
 , componentWillReceiveProps: function (props) {
     this.setState({
