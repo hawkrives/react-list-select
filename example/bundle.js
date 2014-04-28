@@ -124,9 +124,6 @@ React.renderComponent(Demo(), demo)
 },{"../index.js":2}],2:[function(require,module,exports){
 var classList = require('react-mixin-classlist')
 
-var B = React.DOM.b
-var I = React.DOM.i
-
 var KEY = {
   UP: 38
 , DOWN: 40
@@ -231,7 +228,6 @@ var api = {
 var internals = {
   onKeyDown: function (event) {
     var key = event.keyCode
-    var index = this.state.focused
 
     if (key == KEY.UP) {
       this.focusItem('previous')
@@ -240,18 +236,21 @@ var internals = {
       this.focusItem('next')
     }
     else if (key == KEY.SPACE || key == KEY.ENTER) {
-      if (!~this.state.selected.indexOf(index)) {
-        this.select(index)
-      }
-      else {
-        this.deselect(index)
-      }
+      this.toggleSelect(this.state.focused)
     }
 
     // prevent default behavior, in some situations pressing the key
     // up / down would scroll the browser window
     if (~KEYS.indexOf(key)) {
       event.preventDefault()
+    }
+  }
+, toggleSelect: function (index) {
+    if (!~this.state.selected.indexOf(index)) {
+      this.select(index)
+    }
+    else if (this.props.multiple) {
+      this.deselect(index)
     }
   }
 }
@@ -277,6 +276,7 @@ module.exports = React.createClass({
     })
   }
 , render: function () {
+    var component = this
     var items = this.state.items.map(renderItem, this)
 
     var settings = {
@@ -292,45 +292,40 @@ module.exports = React.createClass({
     , 'onMouseEnter'
     , 'onMouseLeave'
     ].forEach(function (method) {
-      if (this.props[method]) {
-        settings[method] = this.props[method].bind(this)
+      if (component.props[method]) {
+        settings[method] = function (event) {
+          component.props[method].call(component, event)
+        }
       }
-    }, this)
+    })
 
-    return B(settings, items)
+    return React.DOM.b(settings, items)
   }
 })
 
 
 function renderItem (item, index) {
+  var $this = this
+
   var classes = this.setClassIf({
     'is-disabled': ~this.state.disabled.indexOf(index)
   , 'is-selected': ~this.state.selected.indexOf(index)
   , 'is-focused': this.state.focused == index
   })
 
-  return (
-    B({
-      key: index
-    , ref: '$' + index
-    , className: 'react-list-select--item ' + classes
+  var settings = {
+    key: index
+  , ref: '$' + index
+  , className: 'react-list-select--item ' + classes
+  , onMouseEnter: function () {
+      if (~$this.state.disabled.indexOf(index)) return
 
-    , onMouseEnter: function () {
-        if (~this.state.disabled.indexOf(index)) return
+      $this.setState({ focused: index })
+    }
+  , onClick: this.toggleSelect.bind(this, index)
+  }
 
-        this.setState({ focused: index })
-      }.bind(this)
-
-    , onClick: function (event) {
-        if (~this.state.selected.indexOf(index)) {
-          this.deselect(index)
-        }
-        else {
-          this.select(index)
-        }
-      }.bind(this)
-    }, item)
-  )
+  return React.DOM.b(settings, item)
 }
 },{"react-mixin-classlist":3}],3:[function(require,module,exports){
 module.exports = {

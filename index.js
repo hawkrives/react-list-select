@@ -104,7 +104,6 @@ var api = {
 var internals = {
   onKeyDown: function (event) {
     var key = event.keyCode
-    var index = this.state.focused
 
     if (key == KEY.UP) {
       this.focusItem('previous')
@@ -113,18 +112,21 @@ var internals = {
       this.focusItem('next')
     }
     else if (key == KEY.SPACE || key == KEY.ENTER) {
-      if (!~this.state.selected.indexOf(index)) {
-        this.select(index)
-      }
-      else {
-        this.deselect(index)
-      }
+      this.toggleSelect(this.state.focused)
     }
 
     // prevent default behavior, in some situations pressing the key
     // up / down would scroll the browser window
     if (~KEYS.indexOf(key)) {
       event.preventDefault()
+    }
+  }
+, toggleSelect: function (index) {
+    if (!~this.state.selected.indexOf(index)) {
+      this.select(index)
+    }
+    else if (this.props.multiple) {
+      this.deselect(index)
     }
   }
 }
@@ -150,6 +152,7 @@ module.exports = React.createClass({
     })
   }
 , render: function () {
+    var component = this
     var items = this.state.items.map(renderItem, this)
 
     var settings = {
@@ -165,10 +168,12 @@ module.exports = React.createClass({
     , 'onMouseEnter'
     , 'onMouseLeave'
     ].forEach(function (method) {
-      if (this.props[method]) {
-        settings[method] = this.props[method]
+      if (component.props[method]) {
+        settings[method] = function (event) {
+          component.props[method].call(component, event)
+        }
       }
-    }, this)
+    })
 
     return React.DOM.b(settings, items)
   }
@@ -194,12 +199,7 @@ function renderItem (item, index) {
       $this.setState({ focused: index })
     }
   , onClick: function (event) {
-      if (!~$this.state.selected.indexOf(index)) {
-        $this.select(index)
-      }
-      else if ($this.props.multiple) {
-        $this.deselect(index)
-      }
+      $this.toggleSelect.call($this, index)
     }
   }
 
