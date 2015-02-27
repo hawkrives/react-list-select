@@ -36,6 +36,8 @@
     "clean": "rm example/bundle* ./*.js",
     "examples": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
-    "start": "npm run build"
+    "start": "npm run build",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean"
   }
 }
