@@ -1,29 +1,35 @@
 {
   "name": "react-list-select",
-  "version": "0.1.0",
-  "description": "List with selectable and navigable items - React.js",
+  "version": "0.2.0",
+  "description": "List with selectable and navigable items",
+  "tags": ["react-component"],
   "main": "index.js",
   "style": "index.css",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:navaru/react-list-select.git"
-  },
   "author": "Navaru",
+  "contributors": ["Hawken Rives <hawkrives@gmail.com>"],
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/navaru/react-list-select/issues"
-  },
-  "homepage": "https://github.com/navaru/react-list-select",
+  "repository": "hawkrives/react-list-select",
   "devDependencies": {
-    "browserify": "^3.33.0",
-    "gulp": "^3.5.6",
-    "send": "^0.2.0",
-    "gulp-livereload": "^1.2.0",
-    "box-css": "git://github.com/navaru/box-css",
-    "rework-npm": "^0.6.1",
-    "rework": "^0.20.2"
+    "babelify": "^5.0.3",
+    "browser-sync": "^2.2.1",
+    "browserify": "^9.0.3",
+    "exorcist": "^0.1.6",
+    "react": "^0.12.2",
+    "watchify": "^2.4.0"
   },
   "dependencies": {
-    "react-mixin-classlist": "git://github.com/navaru/react-mixin-classlist"
+    "classnames": "^1.1.4",
+    "lodash": "^3.3.1"
+  },
+  "config": {
+    "browserify": "--debug -t [babelify] -e index.es -e example/index.js"
+  },
+  "scripts": {
+    "clean": "rm example/bundle*",
+    "build": "browserify $npm_package_config_browserify | exorcist example/bundle.js.map > example/bundle.js",
+    "watch": "watchify --verbose -o example/bundle.js $npm_package_config_browserify",
+    "browser-sync": "browser-sync start --config ./bs-config.js",
+    "serve": "npm run watch & npm run browser-sync; wait",
+    "start": "npm run serve"
   }
 }
