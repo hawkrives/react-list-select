@@ -1,122 +1,69 @@
-var List = require('../index.js')
-
-var DIV = React.DOM.div
-
+import React from 'react'
+import List from '../index.es'
+import values from 'lodash/object/values'
 
 /*
-    EXAMPLE 1
+	EXAMPLE 1
 */
-
-
 
 var hashmap = {
-  'NY': 'New York'
-, 'MN': 'Minnesota'
-, 'SC': 'South Carolina'
-, 'MO': 'Missouri'
-, 'SD': 'South Dakota'
-, 'DE': 'Delaware'
-, 'MS': 'Mississippi'
-, 'TN': 'Tennessee'
-, 'FL': 'Florida'
-, 'MT': 'Montana '
+	'NY': 'New York',
+	'MN': 'Minnesota',
+	'SC': 'South Carolina',
+	'MO': 'Missouri',
+	'SD': 'South Dakota',
+	'DE': 'Delaware',
+	'MS': 'Mississippi',
+	'TN': 'Tennessee',
+	'FL': 'Florida',
+	'MT': 'Montana '
 }
 
-var keys = Object.keys(hashmap)
+var items = values(hashmap)
 
-var items = keys.map(function (key) { return hashmap[key] })
-
-var example1 = List({
-  items: items
-, selected: [3]
-, disabled: [0,4,6,7,9]
-, onMouseEnter: function (event) {
-    this.refs.list.getDOMNode().focus()
-  }
-})
-
-var example1multi = List({
-  items: items
-, selected: [2,4,6]
-, multiple: true
-, onMouseEnter: function (event) {
-    this.refs.list.getDOMNode().focus()
-  }
-})
-
-
+var example1 = <List items={items} selected={[3]} disabled={[0, 4, 6, 7, 9]} />
+var example1multi = <List items={items} selected={[2, 4, 6]} multiple={true} />
 
 
 /*
-    EXAMPLE 3
+	EXAMPLE 3
 */
 
-var items = [
-  'New file'
-, 'New folder'
-, 'Copy'
-, 'Cut'
-, 'Paste'
-, 'Refresh'
-, 'Open'
-, 'Delete'
-]
+var items = ['New file', 'New folder', 'Copy', 'Cut', 'Paste', 'Refresh', 'Open', 'Delete']
 
-var example3 = List({
-  items: items
-, disabled: [3, 7]
-, onMouseEnter: function (event) {
-    this.refs.list.getDOMNode().focus()
-  }
-, onChange: function (selected) {
-
-  }
-})
-
-
-
+var example3 = <List items={items} disabled={[3, 7]} />
 
 
 /*
-    EXAMPLE 4
+	EXAMPLE 4
 */
 
-function comp (name, email) {
-  return DIV({ className: 'contact' }, [
-    DIV({ className: 'name' }, name)
-  , DIV({ className: 'email' }, email)
-  ])
+function comp(name, email) {
+	return <div className='contact'>
+		<div className='name'>{name}</div>
+		<div className='email'>{email}</div>
+	</div>
 }
 
 var comps = [
-  comp('Mike', 'mike@server.com')
-, comp('John', 'john@server.com')
-, comp('Bob', 'bob@server.com')
-, comp('Max', 'max@server.com')
+	comp('Mike', 'mike@server.com'),
+	comp('John', 'john@server.com'),
+	comp('Bob', 'bob@server.com'),
+	comp('Max', 'max@server.com')
 ]
 
-var example4 = List({
-  items: comps
-, disabled: [2]
-, selected: [0]
-, onChange: function (selected) {
-    console.log(selected)
-  }
-})
-
-
-
+var example4 = <List items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
 
 var Demo = React.createClass({
-  render: function () {
-    return DIV({ className: 'demo' }, [
-      DIV({}, [example1, example1multi])
-    , DIV({ className: 'context-menu' }, [example3])
-    , DIV({}, [example4])
-    ])
-  }
+	render() {
+		return <div className='demo'>
+			<div>{example1, example1multi}</div>
+			<div className='context-menu'>{example3}</div>
+			<div>{example4}</div>
+		</div>
+	}
 })
 
 var demo = document.createElement('b')
 document.body.appendChild(demo)
-React.renderComponent(Demo(), demo)
+React.render(<Demo />, demo)
