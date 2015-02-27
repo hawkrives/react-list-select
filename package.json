@@ -2,7 +2,7 @@
   "name": "react-list-select",
   "version": "0.2.0",
   "description": "List with selectable and navigable items",
-  "tags": ["react-component"],
+  "keywords": ["react-component"],
   "main": "index.js",
   "style": "index.css",
   "files": [
