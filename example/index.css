@@ -39,7 +39,7 @@ body {
   border: 1px solid #cacaca;
   margin-right: .5em;
 }
-.react-list-select--item {
+.react-list-select--item label {
   padding: .3em .6em;
 }
 .react-list-select--item.is-selected {
