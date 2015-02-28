@@ -27,6 +27,10 @@ body {
   user-select: inherit;
 }
 
+.react-list-select--item.is-disabled {
+  cursor: default;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -72,7 +76,6 @@ body {
 }
 .react-list-select--item.is-disabled {
   color: #afafaf;
-  cursor: default;
 }
 
 .context-menu .react-list-select {
