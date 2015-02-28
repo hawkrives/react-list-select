@@ -72,8 +72,9 @@ body {
 .react-list-select:focus .react-list-select--item.is-focused::after {
   right: 0;
 }
-.react-list-select--item.is-disabled {
+.react-list-select--item.is-disabled > label {
   color: #afafaf;
+  cursor: default;
 }
 
 .react-list-select--item > label {
