@@ -49,17 +49,17 @@ body {
 .react-list-select:focus .react-list-select--item.is-focused::after {
   content: '';
   position: absolute;
-  left: 0;
   top: 0;
   bottom: 0;
   width: 2px;
   background: #79B9FF;
 }
+.react-list-select:focus .react-list-select--item.is-focused::before {
+  left: 0;
+}
 .react-list-select:focus .react-list-select--item.is-focused::after {
-  left: auto;
   right: 0;
 }
-.react-list-select--item > label > .chkbox[disabled],
 .react-list-select--item.is-disabled {
   color: #afafaf;
 }
