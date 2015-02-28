@@ -50,7 +50,7 @@
   "gh-pages-deploy": {
     "staticpath": "example",
     "prep": [
-      "make-examples"
+      "make-example"
     ],
     "noprompt": false
   }
