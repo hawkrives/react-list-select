@@ -4,7 +4,7 @@
   outline: none;
 }
 
-.react-list-select-item {
+.react-list-select--item {
   position: relative;
   cursor: pointer;
 }
@@ -34,14 +34,14 @@ body {
   border: 1px solid #cacaca;
   margin-right: .5em;
 }
-.react-list-select-item {
+.react-list-select--item {
   padding: .3em .6em;
 }
-.react-list-select-item.is-selected {
+.react-list-select--item.is-selected {
   background: #D7E7FF;
 }
-.react-list-select:focus .react-list-select-item.is-focused::before,
-.react-list-select:focus .react-list-select-item.is-focused::after {
+.react-list-select:focus .react-list-select--item.is-focused::before,
+.react-list-select:focus .react-list-select--item.is-focused::after {
   content: '';
   position: absolute;
   left: 0;
@@ -50,26 +50,26 @@ body {
   width: 2px;
   background: #79B9FF;
 }
-.react-list-select:focus .react-list-select-item.is-focused::after {
+.react-list-select:focus .react-list-select--item.is-focused::after {
   left: auto;
   right: 0;
 }
-.react-list-select-item > label > .chkbox[disabled],
-.react-list-select-item.is-disabled {
+.react-list-select--item > label > .chkbox[disabled],
+.react-list-select--item.is-disabled {
   color: #afafaf;
 }
 
-.react-list-select-item > label {
+.react-list-select--item > label {
   display: block;
 }
-.react-list-select-item > label > .chkbox {
+.react-list-select--item > label > .chkbox {
   display: none;
 }
 
 .context-menu .react-list-select {
   padding: .3em 0;
 }
-.context-menu .react-list-select-item {
+.context-menu .react-list-select--item {
   font-size: .8125em;
 }
 

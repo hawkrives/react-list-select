@@ -10,7 +10,7 @@ let ListItem = React.createClass({
 		}
 	},
 	render() {
-		let classes = cx('react-list-select-item', {
+		let classes = cx('react-list-select--item', {
 			'is-disabled': this.props.disabled,
 			'is-selected': this.props.selected,
 			'is-focused': this.props.focused,
@@ -21,7 +21,7 @@ let ListItem = React.createClass({
 				<input className="chkbox" type="checkbox"
 					disabled={this.props.disabled}
 					checked={this.props.selected}
-					onChange={(ev) => this.props.onChange(this.props.index)} />
+					onChange={() => this.props.onChange(this.props.index)} />
 				{this.props.children}
 			</label>
 		</li>
