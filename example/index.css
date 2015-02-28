@@ -53,6 +53,8 @@ body {
   -o-user-select: inherit;
   user-select: inherit;
 }
+.react-list-select--item:not(.is-disabled):hover::before,
+.react-list-select--item:not(.is-disabled):hover::after,
 .react-list-select:focus .react-list-select--item.is-focused::before,
 .react-list-select:focus .react-list-select--item.is-focused::after {
   content: '';
@@ -62,9 +64,11 @@ body {
   width: 2px;
   background: #79B9FF;
 }
+.react-list-select--item:not(.is-disabled):hover::before,
 .react-list-select:focus .react-list-select--item.is-focused::before {
   left: 0;
 }
+.react-list-select--item:not(.is-disabled):hover::after,
 .react-list-select:focus .react-list-select--item.is-focused::after {
   right: 0;
 }
