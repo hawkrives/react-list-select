@@ -28,6 +28,7 @@ let List = React.createClass({
 			selectedItems: this.props.selected,
 			disabledItems: this.props.disabled,
 			focusedIndex: null,
+			lastSelected: null,
 		}
 	},
 
