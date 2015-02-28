@@ -7,6 +7,7 @@ import min from 'lodash/collection/min'
 import max from 'lodash/collection/max'
 import range from 'lodash/utility/range'
 import remove from 'lodash/array/remove'
+import reject from 'lodash/collection/reject'
 import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
 import ListItem from './ListItem'
@@ -41,14 +42,15 @@ let List = React.createClass({
 	},
 
 	clear() {
-		this.setState({selected: [], disabled: [], focusedIndex: null})
+		this.setState({
+			selected: [],
+			disabled: [],
+			focusedIndex: null,
+			lastSelected: null
+		})
 	},
 
 	select({index=null, contiguous=false}={}) {
-		console.log(index, contiguous)
-		if (!isNumber(index))
-			return
-
 		if (includes(this.state.disabledItems, index))
 			return
 
@@ -68,11 +70,20 @@ let List = React.createClass({
 		this.props.onChange(multiple ? selectedItems : index)
 	},
 
-	deselect(index) {
-		let {selectedItems} = this.state
-		let indexOf = selectedItems.indexOf(index)
+	deselect({index=null, contiguous=false}={}) {
+		let {multiple} = this.props
+		let {selectedItems, lastSelected} = this.state
 
-		selectedItems.splice(indexOf, 1)
+		if (contiguous && multiple && isNumber(lastSelected)) {
+			let start = min([lastSelected, index])
+			let end = max([lastSelected, index])
+
+			let toDeselect = range(start, end + 1)
+			selectedItems = reject(selectedItems, (idx) => includes(toDeselect, idx))
+		}
+		else {
+			selectedItems = reject(selectedItems, (idx) => idx === index)
+		}
 
 		this.setState({selectedItems})
 		this.props.onChange(this.props.multiple ? selectedItems : null)
@@ -163,7 +174,7 @@ let List = React.createClass({
 			this.select({index, contiguous: shift})
 		}
 		else if (this.props.multiple) {
-			this.deselect({index})
+			this.deselect({index, contiguous: shift})
 		}
 	},
 
