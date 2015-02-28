@@ -16,7 +16,9 @@ let ListItem = React.createClass({
 			'is-focused': this.props.focused,
 		})
 
-		return <li className={classes} onClick={() => this.props.onChange(this.props.index)}>
+		return <li className={classes}
+			onMouseOver={() => this.props.onMouseOver(this.props.index)}
+			onClick={() => this.props.onChange(this.props.index)}>
 			{this.props.children}
 		</li>
 	}

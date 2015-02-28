@@ -158,6 +158,7 @@ let List = React.createClass({
 				disabled={disabled}
 				selected={selected}
 				focused={focused}
+				onMouseOver={(index) => this.focusItem({index})}
 				onChange={this.toggleSelect}>
 					{itemContent}
 				</ListItem>
