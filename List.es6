@@ -85,7 +85,7 @@ let List = React.createClass({
 			selectedItems = reject(selectedItems, (idx) => idx === index)
 		}
 
-		this.setState({selectedItems})
+		this.setState({selectedItems, lastSelected: index})
 		this.props.onChange(this.props.multiple ? selectedItems : null)
 	},
 
