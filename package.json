@@ -38,7 +38,7 @@
     "browserify": "--debug -t [babelify] -e index.es6 --extension=.es6"
   },
   "scripts": {
-    "clean": "rm -f **/*.js",
+    "clean": "rm -f *.js example/*.js",
     "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
     "start": "npm run build",
