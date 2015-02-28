@@ -26,6 +26,7 @@
     "browser-sync": "^2.2.1",
     "browserify": "^9.0.3",
     "exorcist": "^0.1.6",
+    "gh-pages-deploy": "^0.3.0",
     "react": "^0.12.2",
     "watchify": "^2.4.0"
   },
@@ -42,6 +43,14 @@
     "build": "babel ./*.es --out-dir ./",
     "start": "npm run build",
     "prepublish": "npm run build",
-    "postpublish": "npm run clean"
+    "postpublish": "npm run clean",
+    "deploy": "gh-pages-deploy"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "example",
+    "prep": [
+      "make-examples"
+    ],
+    "noprompt": false
   }
 }
