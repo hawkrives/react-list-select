@@ -1,3 +1,6 @@
+// Thanks to https://gist.github.com/DelvarWorld/3784055
+// for the inspiration for the shift-selection
+
 import React from 'react'
 import cx from 'classnames'
 import map from 'lodash/collection/map'
