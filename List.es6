@@ -168,6 +168,7 @@ let List = React.createClass({
 	},
 
 	toggleSelect({event, index}={}) {
+		event.preventDefault()
 		let shift = event.shiftKey
 
 		if (!includes(this.state.selectedItems, index)) {
