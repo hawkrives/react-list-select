@@ -21,7 +21,6 @@ let List = React.createClass({
 			selectedItems: this.props.selected,
 			disabledItems: this.props.disabled,
 			focusedIndex: null,
-			isFocused: false,
 		}
 	},
 	componentWillReceiveProps(nextProps) {
@@ -30,6 +29,10 @@ let List = React.createClass({
 			selectedItems: nextProps.selected,
 			disabledItems: nextProps.disabled,
 		})
+	},
+
+	clear() {
+		this.setState({selected: [], disabled: [], focusedIndex: null})
 	},
 
 	select(index) {
