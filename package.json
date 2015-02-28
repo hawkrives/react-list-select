@@ -40,7 +40,7 @@
   "scripts": {
     "clean": "rm -f *.js example/*.js",
     "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
-    "build": "babel ./*.es --out-dir ./",
+    "build": "babel ./*.es6 --out-dir ./",
     "start": "npm run browser-sync & npm run watch; wait",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
