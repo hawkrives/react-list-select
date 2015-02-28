@@ -82,12 +82,12 @@ let List = React.createClass({
 			else {
 				// focus first item if reached last item in the list
 				focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
+			}
 
-				// skip disabled items
-				if (disabledItems.length) {
-					while (includes(disabledItems, focusedIndex)) {
-						focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
-					}
+			// skip disabled items
+			if (disabledItems.length) {
+				while (includes(disabledItems, focusedIndex)) {
+					focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
 				}
 			}
 		}
@@ -98,12 +98,12 @@ let List = React.createClass({
 			else {
 				// focus last item if reached the top of the list
 				focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
+			}
 
-				// skip disabled items
-				if (disabledItems.length) {
-					while (includes(disabledItems, focusedIndex)) {
-						focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
-					}
+			// skip disabled items
+			if (disabledItems.length) {
+				while (includes(disabledItems, focusedIndex)) {
+					focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
 				}
 			}
 		}
