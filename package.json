@@ -38,13 +38,14 @@
     "browserify": "--debug -t [babelify] -e index.es6 --extension=.es6"
   },
   "scripts": {
-    "clean": "rm -f example/bundle* ./*.js",
+    "clean": "rm -f **/*.js",
     "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
     "start": "npm run build",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
-    "deploy": "gh-pages-deploy"
+    "deploy": "gh-pages-deploy",
+    "post-deploy": "npm run clean"
   },
   "gh-pages-deploy": {
     "staticpath": "example",
