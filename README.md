@@ -5,34 +5,24 @@ A list with selectable and keyboard navigable items. Useful as a dropdown (autoc
 
 ## Use:
 
-```
+```js
 var List = require('react-list-select')
 
 var items = [
-  'Google'
-, 'TED'
-, 'GitHub'
-, 'Big Think'
-, 'Microsoft'
+  'Google',
+  'TED',
+  'GitHub',
+  'Big Think',
+  'Microsoft',
 ]
 
-var options = {
-  items: items
+var list = <List items={items}
+  selected={[0]}
+  disabled={[4]}
+  multiple={true}
+  onChange={function (selected) { }} />
 
-// mark selected items
-, selected: [0]
-
-// mark disabled items
-, disabled: [4]
-
-// Enable multi-select
-, multiple: true
-
-// fired when items are selected or deselected
-, onChange: function (selected) { ... }
-}
-
-React.renderComponent(List(options), document.body)
+React.renderComponent(list, document.body)
 ```
 
 
