@@ -34,7 +34,7 @@
     "lodash": "^3.3.1"
   },
   "config": {
-    "browserify": "--debug -t [babelify] -e index.es"
+    "browserify": "--debug -t [babelify] -e index.es6 --extension=.es6"
   },
   "scripts": {
     "clean": "rm -f example/bundle* ./*.js",
