@@ -57,13 +57,13 @@ var example4 = <List items={comps} disabled={[2]} selected={[0]} onChange={conso
 var Demo = React.createClass({
 	render() {
 		return <div className='demo'>
-			<div>{example1, example1multi}</div>
+			<div>{example1} {example1multi}</div>
 			<div className='context-menu'>{example3}</div>
 			<div>{example4}</div>
 		</div>
 	}
 })
 
-var demo = document.createElement('b')
+var demo = document.createElement('div')
 document.body.appendChild(demo)
 React.render(<Demo />, demo)
