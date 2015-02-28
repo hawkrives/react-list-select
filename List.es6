@@ -2,6 +2,7 @@ import React from 'react'
 import cx from 'classnames'
 import map from 'lodash/collection/map'
 import includes from 'lodash/collection/includes'
+import isNumber from 'lodash/lang/isNumber'
 import {KEYS, KEY} from './keys'
 import ListItem from './ListItem'
 
@@ -70,11 +71,11 @@ let List = React.createClass({
 		this.setState({disabledItems: this.state.disabledItems.concat(index)})
 	},
 
-	focusItem(index) {
+	focusItem({next=false, previous=false, index=null}={}) {
 		let {focusedIndex, disabledItems} = this.state
 		let lastItem = this.state.items.length - 1
 
-		if (index == 'next') {
+		if (next) {
 			if (focusedIndex == null) {
 				focusedIndex = 0
 			}
@@ -90,7 +91,7 @@ let List = React.createClass({
 				}
 			}
 		}
-		else if (index == 'previous') {
+		else if (previous) {
 			if (focusedIndex == null) {
 				focusedIndex = lastItem
 			}
@@ -117,10 +118,10 @@ let List = React.createClass({
 		let key = event.keyCode
 
 		if (key == KEY.UP || key == KEY.K) {
-			this.focusItem('previous')
+			this.focusItem({previous: true})
 		}
 		else if (key == KEY.DOWN || key == KEY.J) {
-			this.focusItem('next')
+			this.focusItem({next: true})
 		}
 		else if (key == KEY.SPACE || key == KEY.ENTER) {
 			this.toggleSelect(this.state.focusedIndex)
