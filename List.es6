@@ -107,7 +107,7 @@ let List = React.createClass({
 				}
 			}
 		}
-		else if (includes(disabledItems, index)) {
+		else if (!includes(disabledItems, index) && isNumber(index)) {
 			focusedIndex = index
 		}
 
