@@ -60,12 +60,12 @@ Enable a disabled item to be focused or selected
 
 
 
-#### .focusItem(value)
+#### .focusItem({next, previous, index})
 
   - __value__
-    + `number` __3__ - _items_ array index
-    + `string` __next__ - focus next item from the list
-    + `string` __previous__ - focus previous item from the list
+    + `index` __3__ - _items_ array index
+    + `boolean` __next__ - focus next item from the list
+    + `boolean` __previous__ - focus previous item from the list
 
 Focus an item from the list
 
