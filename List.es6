@@ -16,6 +16,7 @@ let List = React.createClass({
 			onChange: () => {}
 		}
 	},
+
 	getInitialState() {
 		return {
 			items: this.props.items,
@@ -24,6 +25,7 @@ let List = React.createClass({
 			focusedIndex: null,
 		}
 	},
+
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			items: nextProps.items,
@@ -91,6 +93,7 @@ let List = React.createClass({
 				}
 			}
 		}
+
 		else if (previous) {
 			if (focusedIndex == null) {
 				focusedIndex = lastItem
@@ -107,6 +110,7 @@ let List = React.createClass({
 				}
 			}
 		}
+
 		else if (!includes(disabledItems, index) && isNumber(index)) {
 			focusedIndex = index
 		}
