@@ -11,6 +11,10 @@ body {
 .react-list-select--item {
   position: relative;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
   user-select: none;
 }
 
@@ -44,6 +48,11 @@ body {
 }
 .react-list-select--item.is-selected {
   background: #D7E7FF;
+  -webkit-user-select: inherit;
+  -moz-user-select: inherit;
+  -ms-user-select: inherit;
+  -o-user-select: inherit;
+  user-select: inherit;
 }
 .react-list-select:focus .react-list-select--item.is-focused::before,
 .react-list-select:focus .react-list-select--item.is-focused::after {
