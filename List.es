@@ -2,8 +2,8 @@ import React from 'react'
 import cx from 'classnames'
 import map from 'lodash/collection/map'
 import includes from 'lodash/collection/includes'
-import {KEYS, KEY} from './keys.es'
-import ListItem from './ListItem.es'
+import {KEYS, KEY} from './keys'
+import ListItem from './ListItem'
 
 let List = React.createClass({
 	getDefaultProps() {

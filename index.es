@@ -1,3 +1,3 @@
-import List from './List.es'
+import List from './List'
 
 export default List
