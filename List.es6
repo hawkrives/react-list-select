@@ -38,14 +38,26 @@ let List = React.createClass({
 		this.setState({selected: [], disabled: [], focusedIndex: null})
 	},
 
-	select(index) {
+	select({index=null, contiguous=false}={}) {
+		console.log(index, contiguous)
+		if (!isNumber(index))
+			return
+
 		if (includes(this.state.disabledItems, index))
 			return
 
-		let multiple = this.props.multiple
+		let {multiple} = this.props
+		let {lastSelected} = this.state
 		let selectedItems = multiple ? this.state.selectedItems.concat(index) : [index]
 
-		this.setState({selectedItems})
+		if (contiguous && multiple && isNumber(lastSelected)) {
+			let start = min([lastSelected, index])
+			let end = max([lastSelected, index])
+
+			selectedItems = uniq(selectedItems.concat(range(start, end + 1)))
+		}
+
+		this.setState({selectedItems, lastSelected: index})
 
 		this.props.onChange(multiple ? selectedItems : index)
 	},
