@@ -9,12 +9,22 @@ body {
 }
 
 .react-list-select--item {
+  padding: 0.3em 0.6em;
+  cursor: pointer;
   position: relative;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.react-list-select--item.is-selected {
+  -webkit-user-select: inherit;
+  -moz-user-select: inherit;
+  -ms-user-select: inherit;
+  -o-user-select: inherit;
+  user-select: inherit;
 }
 
 ul {
@@ -42,16 +52,8 @@ body {
   border: 1px solid #cacaca;
   margin-right: .5em;
 }
-.react-list-select--item label {
-  padding: .3em .6em;
-}
 .react-list-select--item.is-selected {
   background: #D7E7FF;
-  -webkit-user-select: inherit;
-  -moz-user-select: inherit;
-  -ms-user-select: inherit;
-  -o-user-select: inherit;
-  user-select: inherit;
 }
 .react-list-select--item:not(.is-disabled):hover::before,
 .react-list-select--item:not(.is-disabled):hover::after,
@@ -72,17 +74,9 @@ body {
 .react-list-select:focus .react-list-select--item.is-focused::after {
   right: 0;
 }
-.react-list-select--item.is-disabled > label {
+.react-list-select--item.is-disabled {
   color: #afafaf;
   cursor: default;
-}
-
-.react-list-select--item > label {
-  display: block;
-  cursor: pointer;
-}
-.react-list-select--item > label > .chkbox {
-  display: none;
 }
 
 .context-menu .react-list-select {

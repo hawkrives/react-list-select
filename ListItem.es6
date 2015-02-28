@@ -16,14 +16,8 @@ let ListItem = React.createClass({
 			'is-focused': this.props.focused,
 		})
 
-		return <li className={classes}>
-			<label>
-				<input className="chkbox" type="checkbox"
-					disabled={this.props.disabled}
-					checked={this.props.selected}
-					onChange={() => this.props.onChange(this.props.index)} />
-				{this.props.children}
-			</label>
+		return <li className={classes} onClick={() => this.props.onChange(this.props.index)}>
+			{this.props.children}
 		</li>
 	}
 })
