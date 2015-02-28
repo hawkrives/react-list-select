@@ -38,7 +38,7 @@
   },
   "scripts": {
     "clean": "rm -f example/bundle* ./*.js",
-    "examples": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
+    "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
     "start": "npm run build",
     "prepublish": "npm run build",
