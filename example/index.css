@@ -1,3 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
 .react-list-select {
   display: inline-block;
   position: relative;
@@ -7,6 +11,7 @@
 .react-list-select--item {
   position: relative;
   cursor: pointer;
+  user-select: none;
 }
 
 ul {
@@ -61,6 +66,7 @@ body {
 
 .react-list-select--item > label {
   display: block;
+  cursor: pointer;
 }
 .react-list-select--item > label > .chkbox {
   display: none;
