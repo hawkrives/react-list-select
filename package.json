@@ -37,7 +37,7 @@
     "browserify": "--debug -t [babelify] -e index.es"
   },
   "scripts": {
-    "clean": "rm example/bundle* ./*.js",
+    "clean": "rm -f example/bundle* ./*.js",
     "examples": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
     "start": "npm run build",
