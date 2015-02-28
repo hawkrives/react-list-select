@@ -52,6 +52,6 @@
     "prep": [
       "make-example"
     ],
-    "noprompt": false
+    "noprompt": true
   }
 }
