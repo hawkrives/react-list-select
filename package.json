@@ -1,8 +1,10 @@
 {
   "name": "react-list-select",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "List with selectable and navigable items",
-  "keywords": ["react-component"],
+  "keywords": [
+    "react-component"
+  ],
   "main": "index.js",
   "style": "index.css",
   "files": [
@@ -14,7 +16,9 @@
     "CHANGELOG.md"
   ],
   "author": "Navaru",
-  "contributors": ["Hawken Rives <hawkrives@gmail.com>"],
+  "contributors": [
+    "Hawken Rives <hawkrives@gmail.com>"
+  ],
   "license": "ISC",
   "repository": "hawkrives/react-list-select",
   "devDependencies": {
