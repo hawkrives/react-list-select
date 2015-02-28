@@ -41,9 +41,11 @@
     "clean": "rm -f *.js example/*.js",
     "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
     "build": "babel ./*.es --out-dir ./",
-    "start": "npm run build",
+    "start": "npm run browser-sync & npm run watch; wait",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
+    "watch": "watchify -v $npm_package_config_browserify -e example/index.es6 -o example/bundle.js",
+    "browser-sync": "browser-sync start --files='example/*.js, example/*css, example/*.html}' --server=example/",
     "deploy": "gh-pages-deploy",
     "post-deploy": "npm run clean"
   },
