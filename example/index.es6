@@ -1,5 +1,5 @@
 import React from 'react'
-import List from '../index.es'
+import List from '../index'
 import values from 'lodash/object/values'
 
 /*
