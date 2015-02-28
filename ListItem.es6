@@ -18,7 +18,7 @@ let ListItem = React.createClass({
 
 		return <li className={classes}
 			onMouseOver={() => this.props.onMouseOver(this.props.index)}
-			onClick={() => this.props.onChange(this.props.index)}>
+			onClick={(event) => this.props.onChange({event, index: this.props.index})}>
 			{this.props.children}
 		</li>
 	}

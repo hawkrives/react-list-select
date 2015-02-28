@@ -140,7 +140,7 @@ let List = React.createClass({
 			this.focusItem({next: true})
 		}
 		else if (key == KEY.SPACE || key == KEY.ENTER) {
-			this.toggleSelect(this.state.focusedIndex)
+			this.toggleSelect({event, index: this.state.focusedIndex})
 		}
 
 		// prevent default behavior, in some situations pressing the key
@@ -150,12 +150,14 @@ let List = React.createClass({
 		}
 	},
 
-	toggleSelect(index) {
+	toggleSelect({event, index}={}) {
+		let shift = event.shiftKey
+
 		if (!includes(this.state.selectedItems, index)) {
-			this.select(index)
+			this.select({index, contiguous: shift})
 		}
 		else if (this.props.multiple) {
-			this.deselect(index)
+			this.deselect({index})
 		}
 	},
 
