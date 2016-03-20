@@ -15,196 +15,201 @@ import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
 import ListItem from './ListItem'
 
-let List = React.createClass({
-	getDefaultProps() {
-		return {
-			items: [],
-			selected: [],
-			disabled: [],
-			multiple: false,
-			onChange: () => {}
-		}
-	},
+let MakeList = () => {
 
-	getInitialState() {
-		return {
-			items: this.props.items,
-			selectedItems: this.props.selected,
-			disabledItems: this.props.disabled,
-			focusedIndex: null,
-			lastSelected: null,
-		}
-	},
+	let List = React.createClass({
+		getDefaultProps() {
+			return {
+				items: [],
+				selected: [],
+				disabled: [],
+				multiple: false,
+				onChange: () => {}
+			}
+		},
 
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			items: nextProps.items,
-			selectedItems: nextProps.selected,
-			disabledItems: nextProps.disabled,
-		})
-	},
+		getInitialState() {
+			return {
+				items: this.props.items,
+				selectedItems: this.props.selected,
+				disabledItems: this.props.disabled,
+				focusedIndex: null,
+				lastSelected: null,
+			}
+		},
 
-	clear() {
-		this.setState({
-			selected: [],
-			disabled: [],
-			focusedIndex: null,
-			lastSelected: null
-		})
-	},
+		componentWillReceiveProps(nextProps) {
+			this.setState({
+				items: nextProps.items,
+				selectedItems: nextProps.selected,
+				disabledItems: nextProps.disabled,
+			})
+		},
 
-	select({index=null, contiguous=false}={}) {
-		if (includes(this.state.disabledItems, index))
-			return
+		clear() {
+			this.setState({
+				selected: [],
+				disabled: [],
+				focusedIndex: null,
+				lastSelected: null
+			})
+		},
 
-		let {multiple} = this.props
-		let {lastSelected} = this.state
-		let selectedItems = multiple ? this.state.selectedItems.concat(index) : [index]
+		select({index=null, contiguous=false}={}) {
+			if (includes(this.state.disabledItems, index))
+				return
 
-		if (contiguous && multiple && isNumber(lastSelected)) {
-			let start = min([lastSelected, index])
-			let end = max([lastSelected, index])
+			let {multiple} = this.props
+			let {lastSelected} = this.state
+			let selectedItems = multiple ? this.state.selectedItems.concat(index) : [index]
 
-			selectedItems = uniq(selectedItems.concat(range(start, end + 1)))
-		}
+			if (contiguous && multiple && isNumber(lastSelected)) {
+				let start = min([lastSelected, index])
+				let end = max([lastSelected, index])
 
-		this.setState({selectedItems, lastSelected: index})
+				selectedItems = uniq(selectedItems.concat(range(start, end + 1)))
+			}
 
-		this.props.onChange(multiple ? selectedItems : index)
-	},
+			this.setState({selectedItems, lastSelected: index})
 
-	deselect({index=null, contiguous=false}={}) {
-		let {multiple} = this.props
-		let {selectedItems, lastSelected} = this.state
+			this.props.onChange(multiple ? selectedItems : index)
+		},
 
-		if (contiguous && multiple && isNumber(lastSelected)) {
-			let start = min([lastSelected, index])
-			let end = max([lastSelected, index])
+		deselect({index=null, contiguous=false}={}) {
+			let {multiple} = this.props
+			let {selectedItems, lastSelected} = this.state
 
-			let toDeselect = range(start, end + 1)
-			selectedItems = reject(selectedItems, (idx) => includes(toDeselect, idx))
-		}
-		else {
-			selectedItems = reject(selectedItems, (idx) => idx === index)
-		}
+			if (contiguous && multiple && isNumber(lastSelected)) {
+				let start = min([lastSelected, index])
+				let end = max([lastSelected, index])
 
-		this.setState({selectedItems, lastSelected: index})
-		this.props.onChange(this.props.multiple ? selectedItems : null)
-	},
-
-	enable(index) {
-		let {disabledItems} = this.state
-		let indexOf = disabledItems.indexOf(index)
-
-		disabledItems.splice(indexOf, 1)
-
-		this.setState({disabledItems})
-	},
-
-	disable(index) {
-		this.setState({disabledItems: this.state.disabledItems.concat(index)})
-	},
-
-	focusItem({next=false, previous=false, index=null}={}) {
-		let {focusedIndex, disabledItems} = this.state
-		let lastItem = this.state.items.length - 1
-
-		if (next) {
-			if (focusedIndex == null) {
-				focusedIndex = 0
+				let toDeselect = range(start, end + 1)
+				selectedItems = reject(selectedItems, (idx) => includes(toDeselect, idx))
 			}
 			else {
-				// focus first item if reached last item in the list
-				focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
+				selectedItems = reject(selectedItems, (idx) => idx === index)
 			}
 
-			// skip disabled items
-			if (disabledItems.length) {
-				while (includes(disabledItems, focusedIndex)) {
+			this.setState({selectedItems, lastSelected: index})
+			this.props.onChange(this.props.multiple ? selectedItems : null)
+		},
+
+		enable(index) {
+			let {disabledItems} = this.state
+			let indexOf = disabledItems.indexOf(index)
+
+			disabledItems.splice(indexOf, 1)
+
+			this.setState({disabledItems})
+		},
+
+		disable(index) {
+			this.setState({disabledItems: this.state.disabledItems.concat(index)})
+		},
+
+		focusItem({next=false, previous=false, index=null}={}) {
+			let {focusedIndex, disabledItems} = this.state
+			let lastItem = this.state.items.length - 1
+
+			if (next) {
+				if (focusedIndex == null) {
+					focusedIndex = 0
+				}
+				else {
+					// focus first item if reached last item in the list
 					focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
 				}
-			}
-		}
 
-		else if (previous) {
-			if (focusedIndex == null) {
-				focusedIndex = lastItem
-			}
-			else {
-				// focus last item if reached the top of the list
-				focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
-			}
-
-			// skip disabled items
-			if (disabledItems.length) {
-				while (includes(disabledItems, focusedIndex)) {
-					focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
+				// skip disabled items
+				if (disabledItems.length) {
+					while (includes(disabledItems, focusedIndex)) {
+						focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
+					}
 				}
 			}
-		}
 
-		else if (!includes(disabledItems, index) && isNumber(index)) {
-			focusedIndex = index
-		}
+			else if (previous) {
+				if (focusedIndex == null) {
+					focusedIndex = lastItem
+				}
+				else {
+					// focus last item if reached the top of the list
+					focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
+				}
 
-		this.setState({focusedIndex})
-	},
+				// skip disabled items
+				if (disabledItems.length) {
+					while (includes(disabledItems, focusedIndex)) {
+						focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
+					}
+				}
+			}
 
-	onKeyDown(event) {
-		let key = event.keyCode
+			else if (!includes(disabledItems, index) && isNumber(index)) {
+				focusedIndex = index
+			}
 
-		if (key == KEY.UP || key == KEY.K) {
-			this.focusItem({previous: true})
-		}
-		else if (key == KEY.DOWN || key == KEY.J) {
-			this.focusItem({next: true})
-		}
-		else if (key == KEY.SPACE || key == KEY.ENTER) {
-			this.toggleSelect({event, index: this.state.focusedIndex})
-		}
+			this.setState({focusedIndex})
+		},
 
-		// prevent default behavior, in some situations pressing the key
-		// up / down would scroll the browser window
-		if (includes(KEYS, key)) {
+		onKeyDown(event) {
+			let key = event.keyCode
+
+			if (key == KEY.UP || key == KEY.K) {
+				this.focusItem({previous: true})
+			}
+			else if (key == KEY.DOWN || key == KEY.J) {
+				this.focusItem({next: true})
+			}
+			else if (key == KEY.SPACE || key == KEY.ENTER) {
+				this.toggleSelect({event, index: this.state.focusedIndex})
+			}
+
+			// prevent default behavior, in some situations pressing the key
+			// up / down would scroll the browser window
+			if (includes(KEYS, key)) {
+				event.preventDefault()
+			}
+		},
+
+		toggleSelect({event, index}={}) {
 			event.preventDefault()
+			let shift = event.shiftKey
+
+			if (!includes(this.state.selectedItems, index)) {
+				this.select({index, contiguous: shift})
+			}
+			else if (this.props.multiple) {
+				this.deselect({index, contiguous: shift})
+			}
+		},
+
+		render() {
+			let items = map(this.props.items, (itemContent, index) => {
+				let disabled = includes(this.state.disabledItems, index)
+				let selected = includes(this.state.selectedItems, index)
+				let focused = this.state.focusedIndex === index
+
+				return <ListItem key={index}
+					index={index}
+					disabled={disabled}
+					selected={selected}
+					focused={focused}
+					onMouseOver={(index) => this.focusItem({index})}
+					onChange={this.toggleSelect}>
+						{itemContent}
+					</ListItem>
+			})
+
+			return <ul className={cx('react-list-select', this.props.className)}
+				tabIndex={0}
+				onKeyDown={this.onKeyDown}>
+				{items}
+			</ul>
 		}
-	},
+	})
+	return List
+}
 
-	toggleSelect({event, index}={}) {
-		event.preventDefault()
-		let shift = event.shiftKey
-
-		if (!includes(this.state.selectedItems, index)) {
-			this.select({index, contiguous: shift})
-		}
-		else if (this.props.multiple) {
-			this.deselect({index, contiguous: shift})
-		}
-	},
-
-	render() {
-		let items = map(this.props.items, (itemContent, index) => {
-			let disabled = includes(this.state.disabledItems, index)
-			let selected = includes(this.state.selectedItems, index)
-			let focused = this.state.focusedIndex === index
-
-			return <ListItem key={index}
-				index={index}
-				disabled={disabled}
-				selected={selected}
-				focused={focused}
-				onMouseOver={(index) => this.focusItem({index})}
-				onChange={this.toggleSelect}>
-					{itemContent}
-				</ListItem>
-		})
-
-		return <ul className={cx('react-list-select', this.props.className)}
-			tabIndex={0}
-			onKeyDown={this.onKeyDown}>
-			{items}
-		</ul>
-	}
-})
-
-export default List
+export default MakeList()
+export { MakeList }
