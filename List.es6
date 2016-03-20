@@ -15,7 +15,7 @@ import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
 import ListItem from './ListItem'
 
-let MakeList = () => {
+let MakeList = ({keyboardEvents=true}={}) => {
 
 	let List = React.createClass({
 		getDefaultProps() {
@@ -203,7 +203,7 @@ let MakeList = () => {
 
 			return <ul className={cx('react-list-select', this.props.className)}
 				tabIndex={0}
-				onKeyDown={this.onKeyDown}>
+				onKeyDown={keyboardEvents && this.onKeyDown}>
 				{items}
 			</ul>
 		}

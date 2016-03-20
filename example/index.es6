@@ -1,5 +1,5 @@
 import React from 'react'
-import List from '../index'
+import List, { MakeList } from '../index'
 import values from 'lodash/object/values'
 
 /*
@@ -54,12 +54,25 @@ var comps = [
 
 var example4 = <List items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
 
+
+/*
+	EXAMPLE 5
+*/
+
+var CustomList = MakeList({
+	keyboardEvents: false,
+});
+
+var example5 = <CustomList items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
+
+
 var Demo = React.createClass({
 	render() {
 		return <div className='demo'>
 			<div>{example1} {example1multi}</div>
 			<div className='context-menu'>{example3}</div>
 			<div>{example4}</div>
+			<div>{example5}</div>
 		</div>
 	}
 })
