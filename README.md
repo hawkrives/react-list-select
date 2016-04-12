@@ -1,6 +1,6 @@
 # react-list-select
 
-A list with selectable and keyboard navigable items. Useful as a dropdown (autocomplete), right click menu, or a simple list with actions triggered on item select - [example](http://rawgithub.com/navaru/react-list-select/master/example/index.html)
+A list with selectable and keyboard navigable items. Useful as a dropdown (autocomplete), right click menu, or a simple list with actions triggered on item select - [example](https://hawkrives.github.io/react-list-select/)
 
 
 ## Use:
