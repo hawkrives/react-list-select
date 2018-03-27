@@ -14,26 +14,26 @@ workflows:
   on_commit:
     jobs:
       - prepare
-      - build/library: {requires: [prepare]}
-      - build/example: {requires: [prepare]}
+      - build--library: {requires: [prepare]}
+      - build--example: {requires: [prepare]}
   on_tag:
     jobs:
       - prepare:
           filters: &filters
             branches: {ignore: /.*/}
             tags: {only: /^v.+/}
-      - build/library:
+      - build--library:
           filters: *filters
           requires: [prepare]
-      - build/example:
+      - build--example:
           filters: *filters
           requires: [prepare]
-      - deploy/gh-pages:
+      - deploy--gh-pages:
           filters: *filters
-          requires: [build/example]
-      - deploy/npm:
+          requires: [build--example]
+      - deploy--npm:
           filters: *filters
-          requires: [build/library]
+          requires: [build--library]
 
 jobs:
   prepare: &default
@@ -46,7 +46,7 @@ jobs:
       - run: npm install
       - save_cache: *save-cache
 
-  build/library:
+  build--library:
     <<: *default
     steps:
       - checkout
@@ -58,7 +58,7 @@ jobs:
           paths:
             - ./
 
-  build/example:
+  build--example:
     <<: *default
     steps:
       - checkout
@@ -71,7 +71,7 @@ jobs:
           paths:
             - ./bundle.js
 
-  publish/npm:
+  publish--npm:
     <<: *default
     steps:
       - checkout
@@ -81,7 +81,7 @@ jobs:
           at: ./dist/
       - run: npm publish
 
-  publish/gh-pages:
+  publish--gh-pages:
     <<: *default
     steps:
       - checkout
