@@ -78,7 +78,7 @@ jobs:
       - checkout
       - restore_cache: *restore-cache
       - run: npm install
-      - run: npm run flow
+      - run: npm run flow -- check
 
   can-deploy:
     <<: *default
