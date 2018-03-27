@@ -5,10 +5,10 @@
 
 import * as React from 'react'
 import cx from 'classnames'
-import includes from 'lodash/collection/includes'
-import range from 'lodash/utility/range'
-import reject from 'lodash/collection/reject'
-import uniq from 'lodash/array/uniq'
+import includes from 'lodash/includes'
+import range from 'lodash/range'
+import reject from 'lodash/reject'
+import uniq from 'lodash/uniq'
 import {KEYS, KEY} from './keys'
 import {ListItem} from './list-item'
 

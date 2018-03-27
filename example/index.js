@@ -3,7 +3,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import List from '../src/list'
-import values from 'lodash/object/values'
+import values from 'lodash/values'
 
 /*
 	EXAMPLE 1

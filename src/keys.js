@@ -1,4 +1,4 @@
-import values from 'lodash/object/values'
+import values from 'lodash/values'
 
 export const KEY = {
 	UP: 38,
