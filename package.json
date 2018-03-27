@@ -33,8 +33,7 @@
     "flow-bin": "^0.68.0",
     "gh-pages-deploy": "^0.3.0",
     "prettier": "^1.11.1",
-    "react": ">=15",
-    "watchify": "^2.4.0"
+    "react": ">=15"
   },
   "babel": {
     "presets": [
