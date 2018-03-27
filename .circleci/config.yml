@@ -101,23 +101,3 @@ jobs:
           root: ./example
           paths:
             - ./bundle.js
-
-  publish-npm:
-    <<: *default
-    steps:
-      - checkout
-      - restore_cache: *restore-cache
-      - run: npm install
-      - attach_workspace:
-          at: ./dist/
-      - run: npm publish
-
-  publish-gh-pages:
-    <<: *default
-    steps:
-      - checkout
-      - restore_cache: *restore-cache
-      - run: npm install
-      - attach_workspace:
-          at: ./example/
-      - run: npm run gh-pages
