@@ -1,12 +1,13 @@
 import React from 'react'
-import List, { MakeList } from '../index'
+import ReactDOM from 'react-dom'
+import List, { MakeList } from '../list'
 import values from 'lodash/object/values'
 
 /*
 	EXAMPLE 1
 */
 
-var hashmap = {
+let hashmap = {
 	'NY': 'New York',
 	'MN': 'Minnesota',
 	'SC': 'South Carolina',
@@ -19,19 +20,19 @@ var hashmap = {
 	'MT': 'Montana '
 }
 
-var items = values(hashmap)
+let e1items = values(hashmap)
 
-var example1 = <List items={items} selected={[3]} disabled={[0, 4, 6, 7, 9]} />
-var example1multi = <List items={items} selected={[2, 4, 6]} multiple={true} />
+let example1 = <List items={e1items} selected={[3]} disabled={[0, 4, 6, 7, 9]} />
+let example1multi = <List items={e1items} selected={[2, 4, 6]} multiple={true} />
 
 
 /*
 	EXAMPLE 3
 */
 
-var items = ['New file', 'New folder', 'Copy', 'Cut', 'Paste', 'Refresh', 'Open', 'Delete']
+let e3items = ['New file', 'New folder', 'Copy', 'Cut', 'Paste', 'Refresh', 'Open', 'Delete']
 
-var example3 = <List items={items} disabled={[3, 7]} />
+let example3 = <List items={e3items} disabled={[3, 7]} />
 
 
 /*
@@ -45,28 +46,28 @@ function comp(name, email) {
 	</div>
 }
 
-var comps = [
+let comps = [
 	comp('Mike', 'mike@server.com'),
 	comp('John', 'john@server.com'),
 	comp('Bob', 'bob@server.com'),
 	comp('Max', 'max@server.com')
 ]
 
-var example4 = <List items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
+let example4 = <List items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
 
 
 /*
 	EXAMPLE 5
 */
 
-var CustomList = MakeList({
+let CustomList = MakeList({
 	keyboardEvents: false,
 });
 
-var example5 = <CustomList items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
+let example5 = <CustomList items={comps} disabled={[2]} selected={[0]} onChange={console.log.bind(console)} />
 
 
-var Demo = React.createClass({
+class Demo extends React.Component {
 	render() {
 		return <div className='demo'>
 			<div>{example1} {example1multi}</div>
@@ -75,7 +76,7 @@ var Demo = React.createClass({
 			<div>{example5}</div>
 		</div>
 	}
-})
+}
 
-var demo = document.getElementById('container')
-React.render(<Demo />, demo)
+let demo = document.getElementById('container')
+ReactDOM.render(<Demo />, demo)
