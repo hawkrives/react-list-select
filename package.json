@@ -43,6 +43,7 @@
     "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
     "build": "babel ./*.es6 --out-dir ./",
     "start": "npm run browser-sync & npm run watch; wait",
+    "prepare": "npm run build",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "watch": "watchify -v $npm_package_config_browserify -e example/index.es6 -o example/bundle.js",
