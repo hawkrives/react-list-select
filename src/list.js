@@ -71,11 +71,11 @@ export default class List extends React.Component<Props, State> {
 	}
 
 	select = ({index, contiguous = false}: SelectArgs = {}) => {
-		if (includes(this.state.disabledItems, index)) {
+		if (index === null) {
 			return
 		}
 
-		if (index === null) {
+		if (includes(this.state.disabledItems, index)) {
 			return
 		}
 
@@ -136,10 +136,7 @@ export default class List extends React.Component<Props, State> {
 						includes(toDeselect, idx),
 					)
 				} else {
-					selectedItems = reject(
-						selectedItems,
-						idx => idx === index,
-					)
+					selectedItems = reject(selectedItems, idx => idx === index)
 				}
 
 				return {selectedItems, lastSelected: index}
@@ -169,12 +166,13 @@ export default class List extends React.Component<Props, State> {
 
 	focusIndex = (index: null | number = null) => {
 		this.setState(state => {
+			if (index === null) {
+				return {}
+			}
+
 			let {focusedIndex, disabledItems} = state
 
-			if (
-				!includes(disabledItems, index) &&
-				typeof index === 'number'
-			) {
+			if (!includes(disabledItems, index) && typeof index === 'number') {
 				focusedIndex = index
 			}
 
@@ -191,8 +189,7 @@ export default class List extends React.Component<Props, State> {
 				focusedIndex = lastItem
 			} else {
 				// focus last item if reached the top of the list
-				focusedIndex =
-					focusedIndex <= 0 ? lastItem : focusedIndex - 1
+				focusedIndex = focusedIndex <= 0 ? lastItem : focusedIndex - 1
 			}
 
 			// skip disabled items
@@ -216,8 +213,7 @@ export default class List extends React.Component<Props, State> {
 				focusedIndex = 0
 			} else {
 				// focus first item if reached last item in the list
-				focusedIndex =
-					focusedIndex >= lastItem ? 0 : focusedIndex + 1
+				focusedIndex = focusedIndex >= lastItem ? 0 : focusedIndex + 1
 			}
 
 			// skip disabled items
@@ -255,6 +251,10 @@ export default class List extends React.Component<Props, State> {
 
 	toggleSelect = (args: {contiguous: boolean, index: null | number}) => {
 		let {contiguous, index} = args
+		if (index === null) {
+			return
+		}
+
 		if (!includes(this.state.selectedItems, index)) {
 			this.select({index, contiguous})
 		} else if (this.props.multiple) {
