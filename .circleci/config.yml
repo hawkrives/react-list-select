@@ -14,6 +14,9 @@ workflows:
   on_commit:
     jobs:
       - prepare
+      - lint: {requires: [prepare]}
+      - prettier: {requires: [prepare]}
+      - flow: {requires: [prepare]}
       - build--library: {requires: [prepare]}
       - build--example: {requires: [prepare]}
   on_tag:
@@ -22,18 +25,24 @@ workflows:
           filters: &filters
             branches: {ignore: /.*/}
             tags: {only: /^v.+/}
-      - build--library:
+
+      - lint: &needs-prepare
           filters: *filters
           requires: [prepare]
-      - build--example:
+      - prettier: *needs-prepare
+      - flow: *needs-prepare
+      - build--library: *needs-prepare
+      - build--example: *needs-prepare
+
+      - can-deploy:
           filters: *filters
-          requires: [prepare]
+          requires: [lint, prettier, flow, build--example, build--library]
       - deploy--gh-pages:
           filters: *filters
-          requires: [build--example]
+          requires: [can-deploy]
       - deploy--npm:
           filters: *filters
-          requires: [build--library]
+          requires: [can-deploy]
 
 jobs:
   prepare: &default
@@ -45,6 +54,36 @@ jobs:
       - restore_cache: *restore-cache
       - run: npm install
       - save_cache: *save-cache
+
+  lint:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm install
+      - run: npm run lint
+
+  prettier:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm install
+      - run: npm run prettify
+      - run: git diff-files --exit-code
+
+  flow:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm install
+      - run: npm run flow
+
+  can-deploy:
+    <<: *default
+    steps:
+      - run: echo "noop"
 
   build--library:
     <<: *default
