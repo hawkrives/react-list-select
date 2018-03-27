@@ -6,6 +6,11 @@ extends:
   - eslint:recommended
   - prettier
   - plugin:react/recommended
+  - plugin:flowtype/recommended
+
+plugins:
+  - react
+  - flowtype
 
 rules:
   no-var: error
