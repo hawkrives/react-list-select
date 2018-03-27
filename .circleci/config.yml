@@ -1,0 +1,81 @@
+version: 2
+
+x-config:
+  - &restore-cache
+    keys:
+      - v1-dependencies-{{ checksum "package-lock.json" }}
+      - v1-dependencies-
+  - &save-cache
+    paths: ~/.npm
+    key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+workflows:
+  version: 2
+  on_commit:
+    jobs:
+      - prepare
+      - build/library: {requires: [prepare]}
+      - build/example: {requires: [prepare]}
+  on_tag:
+    jobs:
+      - prepare:
+          filters: &filters
+            branches: {ignore: /.*/}
+            tags: {only: /^v.+/}
+      - build/library:
+          filters: *filters
+          requires: [prepare]
+      - build/example:
+          filters: *filters
+          requires: [prepare]
+      - deploy/gh-pages:
+          filters: *filters
+          requires: [build/example]
+      - deploy/npm:
+          filters: *filters
+          requires: [build/library]
+
+jobs:
+  prepare: &default
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm ci
+      - save_cache: *save-cache
+
+  build/library:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm ci
+      - run: npm run build
+
+  build/example:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm ci
+      - run: npm run example
+
+  publish/npm:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+
+  publish/gh-pages:
+    <<: *default
+    steps:
+      - checkout
+      - restore_cache: *restore-cache
+      - run: npm ci
+      - run: npm run example
+      - run: npm run gh-pages
