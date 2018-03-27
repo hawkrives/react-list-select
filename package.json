@@ -63,7 +63,7 @@
     "lint": "eslint --cache *.js example/*.js",
     "example": "browserify -t [babelify] -e example/index.js > example/bundle.js",
     "prepublishOnly": "npm run build",
-    "prettify": "prettier --write *.js example/*.{css,js}",
+    "prettify": "prettier --write src/*.js example/*.{css,js}",
     "post-deploy": "npm run clean"
   },
   "gh-pages-deploy": {
