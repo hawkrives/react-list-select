@@ -43,7 +43,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm ci
+      - run: npm install
       - save_cache: *save-cache
 
   build/library:
@@ -51,24 +51,34 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm ci
+      - run: npm install
       - run: npm run build
+      - persist_to_workspace:
+          root: ./dist
+          paths:
+            - ./
 
   build/example:
     <<: *default
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm ci
+      - run: npm install
+      - run: cd example && npm install
       - run: npm run example
+      - persist_to_workspace:
+          root: ./example
+          paths:
+            - ./bundle.js
 
   publish/npm:
     <<: *default
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm ci
-      - run: npm run build
+      - run: npm install
+      - attach_workspace:
+          at: ./dist/
       - run: npm publish
 
   publish/gh-pages:
@@ -76,6 +86,7 @@ jobs:
     steps:
       - checkout
       - restore_cache: *restore-cache
-      - run: npm ci
-      - run: npm run example
+      - run: npm install
+      - attach_workspace:
+          at: ./example/
       - run: npm run gh-pages
