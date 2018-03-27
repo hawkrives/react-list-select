@@ -1,4 +1,4 @@
 node_modules/
-*.sublime-workspace
+dist/
 example/bundle.js
-npm-debug.log
+*.log

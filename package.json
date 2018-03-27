@@ -6,12 +6,11 @@
     "react-component"
   ],
   "main": "index.js",
-  "style": "index.css",
   "files": [
     "index.js",
     "keys.js",
-    "List.js",
-    "ListItem.js",
+    "list.js",
+    "list-item.js",
     "README.md",
     "CHANGELOG.md"
   ],
@@ -22,31 +21,33 @@
   "license": "ISC",
   "repository": "hawkrives/react-list-select",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "babelify": "^5.0.3",
     "browser-sync": "^2.2.1",
     "browserify": "^9.0.3",
     "exorcist": "^0.1.6",
     "gh-pages-deploy": "^0.3.0",
-    "react": "^0.12.2",
+    "react": ">=15",
     "watchify": "^2.4.0"
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
   },
   "dependencies": {
     "classnames": "^1.1.4",
     "lodash": "^3.3.1"
   },
   "config": {
-    "browserify": "--debug -t [babelify] -e index.es6 --extension=.es6"
+    "browserify": "--debug -t [babelify] -e index.js"
   },
   "scripts": {
-    "clean": "rm -f *.js example/*.js",
-    "make-example": "browserify $npm_package_config_browserify -e example/index.es6 > example/bundle.js",
-    "build": "babel ./*.es6 --out-dir ./",
+    "make-example": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
+    "build": "babel ./*.js --out-dir ./dist",
     "start": "npm run browser-sync & npm run watch; wait",
-    "prepare": "npm run build",
-    "postpublish": "npm run clean",
-    "watch": "watchify -v $npm_package_config_browserify -e example/index.es6 -o example/bundle.js",
-    "browser-sync": "browser-sync start --files='example/*.js, example/*css, example/*.html}' --server=example/",
+    "prepublishOnly": "npm run build",
     "deploy": "gh-pages-deploy",
     "post-deploy": "npm run clean"
   },
