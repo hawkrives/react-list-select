@@ -9,11 +9,17 @@ class ListItem extends React.Component {
 			'is-focused': this.props.focused,
 		})
 
-		return <li className={classes}
-			onMouseOver={() => this.props.onMouseOver(this.props.index)}
-			onClick={(event) => this.props.onChange({event, index: this.props.index})}>
-			{this.props.children}
-		</li>
+		return (
+			<li
+				className={classes}
+				onMouseOver={() => this.props.onMouseOver(this.props.index)}
+				onClick={event =>
+					this.props.onChange({event, index: this.props.index})
+				}
+			>
+				{this.props.children}
+			</li>
+		)
 	}
 }
 

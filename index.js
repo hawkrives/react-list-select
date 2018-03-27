@@ -1,4 +1,4 @@
-import List, { MakeList } from './List'
+import List, {MakeList} from './List'
 
 export default List
-export { MakeList }
+export {MakeList}
