@@ -23,6 +23,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babelify": "^5.0.3",
     "browser-sync": "^2.2.1",
@@ -41,6 +42,9 @@
   "babel": {
     "presets": [
       "react"
+    ],
+    "plugins": [
+      "transform-class-properties"
     ]
   },
   "prettier": {
