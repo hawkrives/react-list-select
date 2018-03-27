@@ -22,12 +22,17 @@
   "repository": "hawkrives/react-list-select",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
     "babel-preset-react": "^6.24.1",
     "babelify": "^5.0.3",
     "browser-sync": "^2.2.1",
     "browserify": "^9.0.3",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-react": "^7.7.0",
     "exorcist": "^0.1.6",
     "gh-pages-deploy": "^0.3.0",
+    "prettier": "^1.11.1",
     "react": ">=15",
     "watchify": "^2.4.0"
   },
@@ -44,6 +49,7 @@
     "browserify": "--debug -t [babelify] -e index.js"
   },
   "scripts": {
+    "lint": "eslint --cache *.js example/*.js",
     "make-example": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
     "build": "babel ./*.js --out-dir ./dist",
     "start": "npm run browser-sync & npm run watch; wait",
