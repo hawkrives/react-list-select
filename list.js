@@ -1,131 +1,192 @@
+// @flow
+
 // Thanks to https://gist.github.com/DelvarWorld/3784055
 // for the inspiration for the shift-selection
 
-import React from 'react'
+import * as React from 'react'
 import cx from 'classnames'
-import map from 'lodash/collection/map'
 import includes from 'lodash/collection/includes'
-import isNumber from 'lodash/lang/isNumber'
-import min from 'lodash/collection/min'
-import max from 'lodash/collection/max'
 import range from 'lodash/utility/range'
 import reject from 'lodash/collection/reject'
 import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
-import ListItem from './ListItem'
+import ListItem from './list-item'
 
-let MakeList = ({keyboardEvents = true} = {}) => {
-	class List extends React.Component {
-		constructor(...args) {
-			super(...args)
-			this.state = {
-				items: this.props.items,
-				selectedItems: this.props.selected,
-				disabledItems: this.props.disabled,
-				focusedIndex: null,
-				lastSelected: null,
-			}
+type Props = {
+	className?: string,
+	items: Array<React.Node>,
+	selected: Array<number>,
+	disabled: Array<number>,
+	multiple: boolean,
+	onChange: (null | number | Array<number>) => any,
+}
+
+type State = {
+	items: Array<React.Node>,
+	selectedItems: Array<number>,
+	disabledItems: Array<number>,
+	focusedIndex: null | number,
+	lastSelected: null | number,
+}
+
+type SelectArgs = {
+	index: null | number,
+	contiguous: boolean,
+}
+
+let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
+	class List extends React.Component<Props, State> {
+		static defaultProps = {
+			items: [],
+			selected: [],
+			disabled: [],
+			multiple: false,
+			onChange: () => {},
 		}
 
-		componentWillReceiveProps(nextProps) {
-			this.setState({
+		state = {
+			items: this.props.items,
+			selectedItems: this.props.selected,
+			disabledItems: this.props.disabled,
+			focusedIndex: null,
+			lastSelected: null,
+		}
+
+		componentWillReceiveProps(nextProps: Props) {
+			this.setState(() => ({
 				items: nextProps.items,
 				selectedItems: nextProps.selected,
 				disabledItems: nextProps.disabled,
-			})
+			}))
 		}
 
 		clear() {
-			this.setState({
-				selected: [],
-				disabled: [],
+			this.setState(() => ({
+				selectedItems: [],
+				disabledItems: [],
 				focusedIndex: null,
 				lastSelected: null,
-			})
+			}))
 		}
 
-		select({index = null, contiguous = false} = {}) {
+		select({index, contiguous = false}: SelectArgs = {}) {
 			if (includes(this.state.disabledItems, index)) {
 				return
 			}
 
-			let {multiple} = this.props
-			let {lastSelected} = this.state
-			let selectedItems = multiple
-				? this.state.selectedItems.concat(index)
-				: [index]
-
-			if (contiguous && multiple && isNumber(lastSelected)) {
-				let start = min([lastSelected, index])
-				let end = max([lastSelected, index])
-
-				selectedItems = uniq(
-					selectedItems.concat(range(start, end + 1)),
-				)
+			if (index === null) {
+				return
 			}
 
-			this.setState({selectedItems, lastSelected: index})
+			this.setState(
+				state => {
+					let {multiple} = this.props
+					let {lastSelected} = state
+					let selectedItems = multiple
+						? [...state.selectedItems, index]
+						: [index]
 
-			this.props.onChange(multiple ? selectedItems : index)
+					if (
+						contiguous &&
+						multiple &&
+						typeof lastSelected === 'number'
+					) {
+						let start = Math.min(lastSelected, index)
+						let end = Math.max(lastSelected, index)
+
+						selectedItems = uniq([
+							...selectedItems,
+							...range(start, end + 1),
+						])
+					}
+
+					return {selectedItems, lastSelected: index}
+				},
+				() => {
+					this.props.onChange(
+						this.props.multiple
+							? this.state.selectedItems
+							: this.state.lastSelected,
+					)
+				},
+			)
 		}
 
-		deselect({index = null, contiguous = false} = {}) {
-			let {multiple} = this.props
-			let {selectedItems, lastSelected} = this.state
-
-			if (contiguous && multiple && isNumber(lastSelected)) {
-				let start = min([lastSelected, index])
-				let end = max([lastSelected, index])
-
-				let toDeselect = range(start, end + 1)
-				selectedItems = reject(selectedItems, idx =>
-					includes(toDeselect, idx),
-				)
-			} else {
-				selectedItems = reject(selectedItems, idx => idx === index)
+		deselect({index, contiguous = false}: SelectArgs = {}) {
+			if (index === null) {
+				return
 			}
 
-			this.setState({selectedItems, lastSelected: index})
-			this.props.onChange(this.props.multiple ? selectedItems : null)
+			this.setState(
+				state => {
+					let {multiple} = this.props
+					let {selectedItems, lastSelected} = state
+
+					if (
+						contiguous &&
+						multiple &&
+						typeof lastSelected === 'number'
+					) {
+						let start = Math.min(lastSelected, index)
+						let end = Math.max(lastSelected, index)
+
+						let toDeselect = range(start, end + 1)
+						selectedItems = reject(selectedItems, idx =>
+							includes(toDeselect, idx),
+						)
+					} else {
+						selectedItems = reject(
+							selectedItems,
+							idx => idx === index,
+						)
+					}
+
+					return {selectedItems, lastSelected: index}
+				},
+				() => {
+					this.props.onChange(
+						this.props.multiple ? this.state.selectedItems : null,
+					)
+				},
+			)
 		}
 
-		enable(index) {
-			let {disabledItems} = this.state
-			let indexOf = disabledItems.indexOf(index)
-
-			disabledItems.splice(indexOf, 1)
-
-			this.setState({disabledItems})
-		}
-
-		disable(index) {
-			this.setState({
-				disabledItems: this.state.disabledItems.concat(index),
+		enable(index: number) {
+			this.setState(({disabledItems}) => {
+				let indexOf = disabledItems.indexOf(index)
+				return {
+					disabledItems: [...disabledItems].splice(indexOf, 1),
+				}
 			})
 		}
 
-		focusItem({next = false, previous = false, index = null} = {}) {
-			let {focusedIndex, disabledItems} = this.state
-			let lastItem = this.state.items.length - 1
+		disable(index: number) {
+			this.setState(state => ({
+				disabledItems: [...state.disabledItems, index],
+			}))
+		}
 
-			if (next) {
-				if (focusedIndex == null) {
-					focusedIndex = 0
-				} else {
-					// focus first item if reached last item in the list
-					focusedIndex =
-						focusedIndex >= lastItem ? 0 : focusedIndex + 1
+		focusIndex(index: null | number = null) {
+			this.setState(state => {
+				let {focusedIndex, disabledItems} = state
+
+				if (
+					!includes(disabledItems, index) &&
+					typeof index === 'number'
+				) {
+					focusedIndex = index
 				}
 
-				// skip disabled items
-				if (disabledItems.length) {
-					while (includes(disabledItems, focusedIndex)) {
-						focusedIndex =
-							focusedIndex >= lastItem ? 0 : focusedIndex + 1
-					}
-				}
-			} else if (previous) {
-				if (focusedIndex == null) {
+				return {focusedIndex}
+			})
+		}
+
+		focusPrevious() {
+			this.setState(state => {
+				let {focusedIndex, disabledItems} = state
+				let lastItem = state.items.length - 1
+
+				if (focusedIndex === null) {
 					focusedIndex = lastItem
 				} else {
 					// focus last item if reached the top of the list
@@ -140,32 +201,58 @@ let MakeList = ({keyboardEvents = true} = {}) => {
 							focusedIndex <= 0 ? lastItem : focusedIndex - 1
 					}
 				}
-			} else if (!includes(disabledItems, index) && isNumber(index)) {
-				focusedIndex = index
-			}
 
-			this.setState({focusedIndex})
+				return {focusedIndex}
+			})
 		}
 
-		onKeyDown(event) {
+		focusNext() {
+			this.setState(state => {
+				let {focusedIndex, disabledItems} = state
+				let lastItem = state.items.length - 1
+
+				if (focusedIndex === null) {
+					focusedIndex = 0
+				} else {
+					// focus first item if reached last item in the list
+					focusedIndex =
+						focusedIndex >= lastItem ? 0 : focusedIndex + 1
+				}
+
+				// skip disabled items
+				if (disabledItems.length) {
+					while (includes(disabledItems, focusedIndex)) {
+						focusedIndex =
+							focusedIndex >= lastItem ? 0 : focusedIndex + 1
+					}
+				}
+
+				return {focusedIndex}
+			})
+		}
+
+		onKeyDown(event: SyntheticKeyboardEvent<*>) {
 			let key = event.keyCode
 
-			if (key == KEY.UP || key == KEY.K) {
-				this.focusItem({previous: true})
-			} else if (key == KEY.DOWN || key == KEY.J) {
-				this.focusItem({next: true})
-			} else if (key == KEY.SPACE || key == KEY.ENTER) {
+			if (key === KEY.UP || key === KEY.K) {
+				this.focusPrevious()
+			} else if (key === KEY.DOWN || key === KEY.J) {
+				this.focusNext()
+			} else if (key === KEY.SPACE || key === KEY.ENTER) {
 				this.toggleSelect({event, index: this.state.focusedIndex})
 			}
 
-			// prevent default behavior, in some situations pressing the key
-			// up / down would scroll the browser window
+			// prevent default behavior where in some situations pressing the
+			// key up / down would scroll the browser window
 			if (includes(KEYS, key)) {
 				event.preventDefault()
 			}
 		}
 
-		toggleSelect({event, index} = {}) {
+		toggleSelect({
+			event,
+			index,
+		}: {event: SyntheticKeyboardEvent<*>, index: null | number} = {}) {
 			event.preventDefault()
 			let shift = event.shiftKey
 
@@ -177,7 +264,7 @@ let MakeList = ({keyboardEvents = true} = {}) => {
 		}
 
 		render() {
-			let items = map(this.props.items, (itemContent, index) => {
+			let items = this.props.items.map((itemContent, index) => {
 				let disabled = includes(this.state.disabledItems, index)
 				let selected = includes(this.state.selectedItems, index)
 				let focused = this.state.focusedIndex === index
@@ -189,7 +276,7 @@ let MakeList = ({keyboardEvents = true} = {}) => {
 						disabled={disabled}
 						selected={selected}
 						focused={focused}
-						onMouseOver={index => this.focusItem({index})}
+						onMouseOver={index => this.focusIndex(index)}
 						onChange={this.toggleSelect}
 					>
 						{itemContent}
@@ -207,14 +294,6 @@ let MakeList = ({keyboardEvents = true} = {}) => {
 				</ul>
 			)
 		}
-	}
-
-	List.defaultProps = {
-		items: [],
-		selected: [],
-		disabled: [],
-		multiple: false,
-		onChange: () => {},
 	}
 
 	return List
