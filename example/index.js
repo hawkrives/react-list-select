@@ -77,6 +77,5 @@ var Demo = React.createClass({
 	}
 })
 
-var demo = document.createElement('div')
-document.body.appendChild(demo)
+var demo = document.getElementById('container')
 React.render(<Demo />, demo)
