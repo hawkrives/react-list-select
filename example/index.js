@@ -91,20 +91,18 @@ let example5 = (
 	/>
 )
 
-class Demo extends React.Component {
-	render() {
-		return (
-			<div className="demo">
-				<div>
-					{example1} {example1multi}
-				</div>
-				<div className="context-menu">{example3}</div>
-				<div>{example4}</div>
-				<div>{example5}</div>
-			</div>
-		)
-	}
-}
+let Demo = () => (
+	<div className="demo">
+		<div>
+			{example1} {example1multi}
+		</div>
+		<div className="context-menu">{example3}</div>
+		<div>{example4}</div>
+		<div>{example5}</div>
+	</div>
+)
 
 let demo = document.getElementById('container')
-ReactDOM.render(<Demo />, demo)
+if (demo) {
+	ReactDOM.render(<Demo />, demo)
+}
