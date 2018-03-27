@@ -6,9 +6,9 @@ A list with selectable and keyboard navigable items. Useful as a dropdown (autoc
 ## Use:
 
 ```js
-var List = require('react-list-select')
+import List from 'react-list-select'
 
-var items = [
+let items = [
   'Google',
   'TED',
   'GitHub',
@@ -16,63 +16,60 @@ var items = [
   'Microsoft',
 ]
 
-var list = <List items={items}
-  selected={[0]}
-  disabled={[4]}
-  multiple={true}
-  onChange={function (selected) { }} />
+let list = (
+  <List
+    items={items}
+    selected={[0]}
+    disabled={[4]}
+    multiple={true}
+    onChange={(selected: number) => { console.log(selected) }}
+  />
+)
 
-React.renderComponent(list, document.body)
+ReactDOM.renderComponent(list, document.getElementById('container'))
 ```
 
 
 ## API
 
 #### .select(index)
-
- - `number` __index__ - _items_ array index
+- `number` __index__ - _items_ array index
 
 Select an item from the list
 
 
-
 #### .deselect(index)
-
- - `number` __index__ - _items_ array index
+- `number` __index__ - _items_ array index
 
 Deselect an item from the list
 
 
-
 #### .disable(index)
-
- - `number` __index__ - _items_ array index
+- `number` __index__ - _items_ array index
 
 Disable an item from the list to be selected or focused
 
 
-
 #### .enable(index)
-
- - `number` __index__ - _items_ array index
+- `number` __index__ - _items_ array index
 
 Enable a disabled item to be focused or selected
 
 
+#### .focusNext()
+focus next item from the list
 
-#### .focusItem({next, previous, index})
 
-  - __value__
-    + `index` __3__ - _items_ array index
-    + `boolean` __next__ - focus next item from the list
-    + `boolean` __previous__ - focus previous item from the list
+#### .focusPrevious()
+focus previous item from the list
+
+
+#### .focusIndex(index)
+- `number` __index__ - _items_ array index
 
 Focus an item from the list
 
-
-
 #### .clear()
-
 Reset list state
 
 
