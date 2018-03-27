@@ -1,6 +1,8 @@
+// @flow
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import List, {MakeList} from '../list'
+import List from '../src/list'
 import values from 'lodash/object/values'
 
 /*
@@ -79,12 +81,9 @@ let example4 = (
 	EXAMPLE 5
 */
 
-let CustomList = MakeList({
-	keyboardEvents: false,
-})
-
 let example5 = (
-	<CustomList
+	<List
+		keyboardEvents={false}
 		items={comps}
 		disabled={[2]}
 		selected={[0]}
