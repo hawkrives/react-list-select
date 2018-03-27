@@ -10,7 +10,7 @@ import range from 'lodash/utility/range'
 import reject from 'lodash/collection/reject'
 import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
-import ListItem from './list-item'
+import {ListItem} from './list-item'
 
 type Props = {
 	className?: string,
@@ -60,7 +60,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			}))
 		}
 
-		clear() {
+		clear = () => {
 			this.setState(() => ({
 				selectedItems: [],
 				disabledItems: [],
@@ -69,7 +69,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			}))
 		}
 
-		select({index, contiguous = false}: SelectArgs = {}) {
+		select = ({index, contiguous = false}: SelectArgs = {}) => {
 			if (includes(this.state.disabledItems, index)) {
 				return
 			}
@@ -112,7 +112,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			)
 		}
 
-		deselect({index, contiguous = false}: SelectArgs = {}) {
+		deselect = ({index, contiguous = false}: SelectArgs = {}) => {
 			if (index === null) {
 				return
 			}
@@ -151,7 +151,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			)
 		}
 
-		enable(index: number) {
+		disable = (index: number) => {
 			this.setState(({disabledItems}) => {
 				let indexOf = disabledItems.indexOf(index)
 				return {
@@ -160,13 +160,13 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			})
 		}
 
-		disable(index: number) {
+		disable = (index: number) => {
 			this.setState(state => ({
 				disabledItems: [...state.disabledItems, index],
 			}))
 		}
 
-		focusIndex(index: null | number = null) {
+		focusIndex = (index: null | number = null) => {
 			this.setState(state => {
 				let {focusedIndex, disabledItems} = state
 
@@ -181,7 +181,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			})
 		}
 
-		focusPrevious() {
+		focusPrevious = () => {
 			this.setState(state => {
 				let {focusedIndex, disabledItems} = state
 				let lastItem = state.items.length - 1
@@ -206,7 +206,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			})
 		}
 
-		focusNext() {
+		focusNext = () => {
 			this.setState(state => {
 				let {focusedIndex, disabledItems} = state
 				let lastItem = state.items.length - 1
@@ -231,7 +231,7 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			})
 		}
 
-		onKeyDown(event: SyntheticKeyboardEvent<*>) {
+		onKeyDown = (event: SyntheticKeyboardEvent<>) => {
 			let key = event.keyCode
 
 			if (key === KEY.UP || key === KEY.K) {
@@ -239,7 +239,10 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			} else if (key === KEY.DOWN || key === KEY.J) {
 				this.focusNext()
 			} else if (key === KEY.SPACE || key === KEY.ENTER) {
-				this.toggleSelect({event, index: this.state.focusedIndex})
+				this.toggleKeyboardSelect({
+					event,
+					index: this.state.focusedIndex,
+				})
 			}
 
 			// prevent default behavior where in some situations pressing the
@@ -249,18 +252,33 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 			}
 		}
 
-		toggleSelect({
-			event,
-			index,
-		}: {event: SyntheticKeyboardEvent<*>, index: null | number} = {}) {
+		toggleSelect = (args: {contiguous: boolean, index: null | number}) => {
+			let {contiguous, index} = args
+			if (!includes(this.state.selectedItems, index)) {
+				this.select({index, contiguous})
+			} else if (this.props.multiple) {
+				this.deselect({index, contiguous})
+			}
+		}
+
+		toggleKeyboardSelect = (args: {
+			event: SyntheticKeyboardEvent<>,
+			index: null | number,
+		}) => {
+			let {event, index} = args
 			event.preventDefault()
 			let shift = event.shiftKey
+			this.toggleSelect({contiguous: shift, index})
+		}
 
-			if (!includes(this.state.selectedItems, index)) {
-				this.select({index, contiguous: shift})
-			} else if (this.props.multiple) {
-				this.deselect({index, contiguous: shift})
-			}
+		toggleMouseSelect = (args: {
+			event: SyntheticMouseEvent<>,
+			index: number,
+		}) => {
+			let {event, index} = args
+			event.preventDefault()
+			let shift = event.shiftKey
+			this.toggleSelect({contiguous: shift, index})
 		}
 
 		render() {
@@ -276,8 +294,8 @@ let MakeList = ({keyboardEvents = true}: {keyboardEvents: boolean} = {}) => {
 						disabled={disabled}
 						selected={selected}
 						focused={focused}
-						onMouseOver={index => this.focusIndex(index)}
-						onChange={this.toggleSelect}
+						onMouseOver={this.focusIndex}
+						onChange={this.toggleMouseSelect}
 					>
 						{itemContent}
 					</ListItem>
