@@ -1,32 +1,49 @@
-import React from 'react'
+// @flow
+
+import * as React from 'react'
 import cx from 'classnames'
 
-class ListItem extends React.Component {
+type Props = {
+	disabled: boolean,
+	selected: boolean,
+	focused: boolean,
+	onMouseOver: number => any,
+	children: React.Node,
+	index: number,
+	onChange: ({event: SyntheticMouseEvent<>, index: number}) => any,
+}
+
+export class ListItem extends React.Component<Props> {
+	static defaultProps = {
+		disabled: false,
+		selected: false,
+		focused: false,
+	}
+
+	handleMouseOver = () => {
+		this.props.onMouseOver(this.props.index)
+	}
+
+	handleChange = (ev: SyntheticMouseEvent<>) => {
+		this.props.onChange({event: ev, index: this.props.index})
+	}
+
 	render() {
+		let props = this.props
 		let classes = cx('react-list-select--item', {
-			'is-disabled': this.props.disabled,
-			'is-selected': this.props.selected,
-			'is-focused': this.props.focused,
+			'is-disabled': props.disabled,
+			'is-selected': props.selected,
+			'is-focused': props.focused,
 		})
 
 		return (
 			<li
 				className={classes}
-				onMouseOver={() => this.props.onMouseOver(this.props.index)}
-				onClick={event =>
-					this.props.onChange({event, index: this.props.index})
-				}
+				onMouseOver={this.handleMouseOver}
+				onClick={this.handleChange}
 			>
-				{this.props.children}
+				{props.children}
 			</li>
 		)
 	}
 }
-
-ListItem.defaultProps = {
-	disabled: false,
-	selected: false,
-	focused: false,
-}
-
-export default ListItem
