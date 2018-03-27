@@ -34,13 +34,6 @@ workflows:
       - build-library: *needs-prepare
       - build-example: *needs-prepare
 
-      - publish-gh-pages:
-          filters: *filters
-          requires: [lint, prettier, flow, build-example, build-library]
-      - publish-npm:
-          filters: *filters
-          requires: [lint, prettier, flow, build-example, build-library]
-
 jobs:
   prepare: &default
     docker:
