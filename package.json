@@ -1,7 +1,7 @@
 {
   "name": "react-list-select",
   "version": "0.3.0",
-  "license": "ISC",
+  "license": "MIT",
   "description": "List with selectable and navigable items",
   "author": "Navaru",
   "repository": "hawkrives/react-list-select",
