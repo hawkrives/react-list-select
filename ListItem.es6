@@ -1,14 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
 
-let ListItem = React.createClass({
-	getDefaultProps() {
-		return {
-			disabled: false,
-			selected: false,
-			focused: false,
-		}
-	},
+class ListItem extends React.Component {
 	render() {
 		let classes = cx('react-list-select--item', {
 			'is-disabled': this.props.disabled,
@@ -22,6 +15,12 @@ let ListItem = React.createClass({
 			{this.props.children}
 		</li>
 	}
-})
+}
+
+ListItem.defaultProps = {
+	disabled: false,
+	selected: false,
+	focused: false,
+}
 
 export default ListItem

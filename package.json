@@ -22,6 +22,7 @@
   "license": "ISC",
   "repository": "hawkrives/react-list-select",
   "devDependencies": {
+    "babel-preset-react": "^6.24.1",
     "babelify": "^5.0.3",
     "browser-sync": "^2.2.1",
     "browserify": "^9.0.3",

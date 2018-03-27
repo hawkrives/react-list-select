@@ -9,7 +9,6 @@ import isNumber from 'lodash/lang/isNumber'
 import min from 'lodash/collection/min'
 import max from 'lodash/collection/max'
 import range from 'lodash/utility/range'
-import remove from 'lodash/array/remove'
 import reject from 'lodash/collection/reject'
 import uniq from 'lodash/array/uniq'
 import {KEYS, KEY} from './keys'
@@ -17,26 +16,18 @@ import ListItem from './ListItem'
 
 let MakeList = ({keyboardEvents=true}={}) => {
 
-	let List = React.createClass({
-		getDefaultProps() {
-			return {
-				items: [],
-				selected: [],
-				disabled: [],
-				multiple: false,
-				onChange: () => {}
-			}
-		},
+	class List extends React.Component {
 
-		getInitialState() {
-			return {
+		constructor(...args) {
+			super(...args);
+			this.state =  {
 				items: this.props.items,
 				selectedItems: this.props.selected,
 				disabledItems: this.props.disabled,
 				focusedIndex: null,
 				lastSelected: null,
 			}
-		},
+		}
 
 		componentWillReceiveProps(nextProps) {
 			this.setState({
@@ -44,7 +35,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 				selectedItems: nextProps.selected,
 				disabledItems: nextProps.disabled,
 			})
-		},
+		}
 
 		clear() {
 			this.setState({
@@ -53,7 +44,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 				focusedIndex: null,
 				lastSelected: null
 			})
-		},
+		}
 
 		select({index=null, contiguous=false}={}) {
 			if (includes(this.state.disabledItems, index))
@@ -73,7 +64,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 			this.setState({selectedItems, lastSelected: index})
 
 			this.props.onChange(multiple ? selectedItems : index)
-		},
+		}
 
 		deselect({index=null, contiguous=false}={}) {
 			let {multiple} = this.props
@@ -92,7 +83,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 
 			this.setState({selectedItems, lastSelected: index})
 			this.props.onChange(this.props.multiple ? selectedItems : null)
-		},
+		}
 
 		enable(index) {
 			let {disabledItems} = this.state
@@ -101,11 +92,11 @@ let MakeList = ({keyboardEvents=true}={}) => {
 			disabledItems.splice(indexOf, 1)
 
 			this.setState({disabledItems})
-		},
+		}
 
 		disable(index) {
 			this.setState({disabledItems: this.state.disabledItems.concat(index)})
-		},
+		}
 
 		focusItem({next=false, previous=false, index=null}={}) {
 			let {focusedIndex, disabledItems} = this.state
@@ -150,7 +141,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 			}
 
 			this.setState({focusedIndex})
-		},
+		}
 
 		onKeyDown(event) {
 			let key = event.keyCode
@@ -170,7 +161,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 			if (includes(KEYS, key)) {
 				event.preventDefault()
 			}
-		},
+		}
 
 		toggleSelect({event, index}={}) {
 			event.preventDefault()
@@ -182,7 +173,7 @@ let MakeList = ({keyboardEvents=true}={}) => {
 			else if (this.props.multiple) {
 				this.deselect({index, contiguous: shift})
 			}
-		},
+		}
 
 		render() {
 			let items = map(this.props.items, (itemContent, index) => {
@@ -207,9 +198,18 @@ let MakeList = ({keyboardEvents=true}={}) => {
 				{items}
 			</ul>
 		}
-	})
+	}
+
+	List.defaultProps = {
+		items: [],
+		selected: [],
+		disabled: [],
+		multiple: false,
+		onChange: () => {}
+	};
+
 	return List
-}
+};
 
 export default MakeList()
 export { MakeList }
