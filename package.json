@@ -7,10 +7,7 @@
   ],
   "main": "index.js",
   "files": [
-    "index.js",
-    "keys.js",
-    "list.js",
-    "list-item.js",
+    "dist/",
     "README.md",
     "CHANGELOG.md"
   ],
@@ -63,20 +60,19 @@
     "browserify": "--debug -t [babelify] -e index.js"
   },
   "scripts": {
-    "flow": "flow",
-    "prettify": "prettier --write *.js example/*.{css,js}",
-    "lint": "eslint --cache *.js example/*.js",
-    "make-example": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
     "build": "babel ./*.js --out-dir ./dist",
-    "start": "npm run browser-sync & npm run watch; wait",
-    "prepublishOnly": "npm run build",
     "deploy": "gh-pages-deploy",
+    "flow": "flow",
+    "lint": "eslint --cache *.js example/*.js",
+    "example": "browserify $npm_package_config_browserify -e example/index.js > example/bundle.js",
+    "prepublishOnly": "npm run build",
+    "prettify": "prettier --write *.js example/*.{css,js}",
     "post-deploy": "npm run clean"
   },
   "gh-pages-deploy": {
     "staticpath": "example",
     "prep": [
-      "make-example"
+      "example"
     ],
     "noprompt": true
   }
