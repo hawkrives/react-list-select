@@ -108,6 +108,28 @@ let e6items = [
 
 let example6 = <List items={e6items} listItemClassName="list-item--animate" />
 
+let e7items = [
+	'One',
+	'Two',
+	'Three',
+	'For',
+	'Five',
+	'Six',
+	'Seven',
+	'Eight',
+	'Nine',
+	'Ten'
+]
+
+let example7 = <List items={e7items} onListItemReceiveFocus={(focusedIndex, element) => {
+	let domElement = ReactDOM.findDOMNode(element);
+
+	domElement.scrollIntoView({
+		behavior: 'smooth',
+		block: 'nearest'
+	});
+}}/>
+
 let Demo = () => (
 	<div className="demo">
 		<div>
@@ -117,6 +139,9 @@ let Demo = () => (
 		<div>{example4}</div>
 		<div>{example5}</div>
 		<div>{example6}</div>
+		<div style={{overflowY: 'scroll', height: '200px'}}>
+			{example7}
+		</div>
 	</div>
 )
 

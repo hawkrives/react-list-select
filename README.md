@@ -32,7 +32,20 @@ let list = (
 ReactDOM.renderComponent(list, document.getElementById('container'))
 ```
 
+## Long lists:
+For lists inside a block with overflow, you can define a function to be called when the list item change to focused
+and act on the node the way you want.
 
+```js
+let example7 = <List items={e7items} onListItemReceiveFocus={(focusedIndex, element) => {
+	let domElement = ReactDOM.findDOMNode(element);
+
+	domElement.scrollIntoView({
+		behavior: 'smooth',
+		block: 'nearest'
+	});
+}}/>
+```
 ## API
 
 #### .select(index)
