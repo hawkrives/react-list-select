@@ -53,7 +53,8 @@
 	},
 	"dependencies": {
 		"classnames": "^2.2.5",
-		"lodash": "^4.17.5"
+		"lodash": "^4.17.5",
+		"react": "^16.4.1"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
@@ -69,10 +70,9 @@
 		"eslint-plugin-flowtype": "^2.46.1",
 		"eslint-plugin-react": "^7.7.0",
 		"flow-bin": "^0.68.0",
-		"gh-pages-deploy": "^0.4.2",
+		"gh-pages-deploy": "^0.5.0",
 		"http-server": "^0.11.1",
 		"nodemon": "^1.18.3",
-		"prettier": "^1.11.1",
-		"react": ">=15"
+		"prettier": "^1.11.1"
 	}
 }
