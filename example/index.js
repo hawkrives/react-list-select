@@ -91,6 +91,23 @@ let example5 = (
 	/>
 )
 
+/*
+	EXAMPLE 6
+*/
+
+let e6items = [
+	'New file',
+	'New folder',
+	'Copy',
+	'Cut',
+	'Paste',
+	'Refresh',
+	'Open',
+	'Delete',
+]
+
+let example6 = <List items={e6items} listItemClassName="list-item--animate" />
+
 let Demo = () => (
 	<div className="demo">
 		<div>
@@ -99,6 +116,7 @@ let Demo = () => (
 		<div className="context-menu">{example3}</div>
 		<div>{example4}</div>
 		<div>{example5}</div>
+		<div>{example6}</div>
 	</div>
 )
 

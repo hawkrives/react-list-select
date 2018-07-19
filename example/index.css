@@ -92,3 +92,30 @@ body {
 	font-size: 0.675em;
 	color: #999;
 }
+
+.list-item--animate {
+	-webkit-animation-name: "listItemAnimation";
+	        animation-name: "listItemAnimation";
+	-webkit-animation-duration: 2s;
+			animation-duration: 2s;
+}
+
+@-webkit-keyframes listItemAnimation {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 100;
+	}
+}
+
+@keyframes listItemAnimation {
+	0% {
+		-webkit-transform: translateY(300%);
+		        transform: translateY(300%);
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

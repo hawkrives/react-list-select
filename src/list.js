@@ -20,6 +20,7 @@ type Props = {
 	multiple: boolean,
 	onChange: (null | number | Array<number>) => any,
 	keyboardEvents: boolean,
+	listItemClassName?: string
 }
 
 type State = {
@@ -289,6 +290,7 @@ export default class List extends React.Component<Props, State> {
 					focused={focused}
 					onMouseOver={this.focusIndex}
 					onChange={this.toggleMouseSelect}
+					className={this.props.listItemClassName}
 				>
 					{itemContent}
 				</ListItem>
@@ -299,7 +301,7 @@ export default class List extends React.Component<Props, State> {
 			<ul
 				className={cx('react-list-select', this.props.className)}
 				tabIndex={0}
-				onKeyDown={this.props.keyboardEvents && this.onKeyDown}
+				onKeyDown={this.props.keyboardEvents ? this.onKeyDown : undefined}
 			>
 				{items}
 			</ul>

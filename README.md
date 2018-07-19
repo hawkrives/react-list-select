@@ -24,7 +24,8 @@ let list = (
     selected={[0]}
     disabled={[4]}
     multiple={true}
-    onChange={(selected: number) => { console.log(selected) }}
+	onChange={(selected: number) => { console.log(selected) }}
+	listItemClassName={"list--list-item-custom-classes"}
   />
 )
 
