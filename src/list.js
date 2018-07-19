@@ -53,14 +53,6 @@ export default class List extends React.Component<Props, State> {
 		lastSelected: null,
 	}
 
-	componentWillReceiveProps(nextProps: Props) {
-		this.setState(() => ({
-			items: nextProps.items,
-			selectedItems: nextProps.selected,
-			disabledItems: nextProps.disabled,
-		}))
-	}
-
 	clear = () => {
 		this.setState(() => ({
 			selectedItems: [],
