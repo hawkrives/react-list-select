@@ -1,12 +1,13 @@
 {
-	"name": "react-list-select",
-	"version": "0.4.0",
+	"name": "react-list-select-extended",
+	"version": "0.5.0",
 	"license": "MIT",
 	"description": "List with selectable and navigable items",
-	"author": "Navaru",
-	"repository": "hawkrives/react-list-select",
+	"author": "GersonDias",
+	"repository": "gersondias/react-list-select",
 	"contributors": [
-		"Hawken Rives <hawkrives@gmail.com>"
+		"Hawken Rives <hawkrives@gmail.com>",
+		"Gerson Dias <eu@gersondias.net>"
 	],
 	"keywords": [
 		"react-component"
