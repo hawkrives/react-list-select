@@ -289,6 +289,14 @@ export default class List extends React.Component<Props, State> {
 		this.toggleSelect({contiguous: shift, index})
 	}
 
+	componentWillReceiveProps(nextProps: Props) {	
+		this.setState(() => ({	
+			items: nextProps.items,	
+			selectedItems: nextProps.selected,	
+			disabledItems: nextProps.disabled,	
+		}))	
+	}
+
 	render() {
 		let items = this.props.items.map((itemContent, index) => {
 			let disabled = includes(this.state.disabledItems, index)
