@@ -307,7 +307,7 @@ export default class List extends React.Component<Props, State> {
 			<ul
 				className={cx('react-list-select', this.props.className)}
 				tabIndex={0}
-				onKeyDown={this.props.keyboardEvents && this.onKeyDown}
+				onKeyDown={this.props.keyboardEvents ? this.onKeyDown : undefined}
 			>
 				{items}
 			</ul>
