@@ -20,6 +20,8 @@ type Props = {
 	multiple: boolean,
 	onChange: (null | number | Array<number>) => any,
 	keyboardEvents: boolean,
+	listItemClassName?: string,
+	onListItemReceiveFocus?: (focusedIndex: number) => any;
 }
 
 type State = {
@@ -36,6 +38,8 @@ type SelectArgs = {
 }
 
 export default class List extends React.Component<Props, State> {
+	liRefs = [];
+
 	static defaultProps = {
 		items: [],
 		selected: [],
@@ -51,14 +55,6 @@ export default class List extends React.Component<Props, State> {
 		disabledItems: this.props.disabled,
 		focusedIndex: null,
 		lastSelected: null,
-	}
-
-	componentWillReceiveProps(nextProps: Props) {
-		this.setState(() => ({
-			items: nextProps.items,
-			selectedItems: nextProps.selected,
-			disabledItems: nextProps.disabled,
-		}))
 	}
 
 	clear = () => {
@@ -164,6 +160,12 @@ export default class List extends React.Component<Props, State> {
 		}))
 	}
 
+	onListItemReceiveFocus(focusedIndex: number) {
+		if (this.props.onListItemReceiveFocus) {
+			this.props.onListItemReceiveFocus(focusedIndex, this.liRefs[focusedIndex].current);
+		}
+	}
+
 	focusIndex = (index: null | number = null) => {
 		this.setState(state => {
 			if (index === null) {
@@ -176,6 +178,7 @@ export default class List extends React.Component<Props, State> {
 				focusedIndex = index
 			}
 
+			this.onListItemReceiveFocus(focusedIndex);
 			return {focusedIndex}
 		})
 	}
@@ -200,8 +203,11 @@ export default class List extends React.Component<Props, State> {
 				}
 			}
 
+			this.onListItemReceiveFocus(focusedIndex);
 			return {focusedIndex}
 		})
+
+
 	}
 
 	focusNext = () => {
@@ -224,6 +230,7 @@ export default class List extends React.Component<Props, State> {
 				}
 			}
 
+			this.onListItemReceiveFocus(focusedIndex);
 			return {focusedIndex}
 		})
 	}
@@ -282,12 +289,20 @@ export default class List extends React.Component<Props, State> {
 		this.toggleSelect({contiguous: shift, index})
 	}
 
+	componentWillReceiveProps(nextProps: Props) {	
+		this.setState(() => ({	
+			items: nextProps.items,	
+			selectedItems: nextProps.selected,	
+			disabledItems: nextProps.disabled,	
+		}))	
+	}
+
 	render() {
 		let items = this.props.items.map((itemContent, index) => {
 			let disabled = includes(this.state.disabledItems, index)
 			let selected = includes(this.state.selectedItems, index)
 			let focused = this.state.focusedIndex === index
-
+			this.liRefs[index] = React.createRef();
 			return (
 				<ListItem
 					key={index}
@@ -297,6 +312,8 @@ export default class List extends React.Component<Props, State> {
 					focused={focused}
 					onMouseOver={this.focusIndex}
 					onChange={this.toggleMouseSelect}
+					className={this.props.listItemClassName}
+					ref={this.liRefs[index]}
 				>
 					{itemContent}
 				</ListItem>

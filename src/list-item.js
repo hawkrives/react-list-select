@@ -11,6 +11,7 @@ type Props = {
 	children: React.Node,
 	index: number,
 	onChange: ({event: SyntheticMouseEvent<>, index: number}) => any,
+	className: string,
 }
 
 export class ListItem extends React.Component<Props> {
@@ -18,6 +19,7 @@ export class ListItem extends React.Component<Props> {
 		disabled: false,
 		selected: false,
 		focused: false,
+		className: ''
 	}
 
 	handleMouseOver = () => {
@@ -34,7 +36,7 @@ export class ListItem extends React.Component<Props> {
 			'is-disabled': props.disabled,
 			'is-selected': props.selected,
 			'is-focused': props.focused,
-		})
+		}, props.className)
 
 		return (
 			<li
