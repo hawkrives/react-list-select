@@ -1,5 +1,8 @@
 # Changes
 
+## v0.4.1
+- fixed an `onKeyDown` error (#5, @lluiscab)
+
 ## v0.4.0
 - Split `focusItem({next, previous, index})` into `focusNext()`, `focusPrevious()`, and `focusIndex(index)`
 - Removed `makeList` factory. To replicate the functionality, pass `keyboardEvents={false}` directly to the List component
